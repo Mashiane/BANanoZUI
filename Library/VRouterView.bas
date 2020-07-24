@@ -455,7 +455,7 @@ Next
 End If
 Dim exattr As String = BANanoShared.BuildAttributes(properties)
 
-Dim strRes As String = $"<${mTagName} id="${mName}" ${exAttr}>${sCaption}</${mTagName}>"$
+Dim strRes As String = $"<${mTagName} id="${mName}" ${exattr}>${sCaption}</${mTagName}>"$
 Return strRes
 End Sub
 
@@ -478,7 +478,7 @@ End Sub
 
 'change the id of the element, ONLY execute this after a manual Initialize
 Sub SetID(varText As String) As VRouterView
-	mname = varText
+	mName = varText
 	Return Me
 End Sub
 
@@ -606,17 +606,17 @@ Sub AddClass(classNames As List) As VRouterView
 	For Each k As String In classNames
 		classList.put(k, k)
 	Next
-	dim cm as string = BANanoShared.Join(" ", classnames)
-	Setclasses(cm)
+	Dim cm As String = BANanoShared.Join(" ", classNames)
+	SetClasses(cm)
 	Return Me
 End Sub
 
 'set styles from a map
 Sub SetStyles(m As Map) As VRouterView
-	for each k as string in m.Keys
-		dim v as string = m.get(k)
+	For Each k As String In m.Keys
+		Dim v As String = m.get(k)
 		styles.put(k, v)
-	next
+	Next
 	Dim jsonStyle As String = BANano.ToJson(m)
 	SetStyle(jsonStyle)
 	Return Me
@@ -633,9 +633,9 @@ End Sub
 
 'set an attribute
 Sub SetAttr(prop As String, value As String) As VRouterView
-	If BANano.IsUndefined(prop) or BANano.IsNull(prop) Then prop = ""
-	If BANano.IsUndefined(value) or BANano.IsNull(value) Then value = ""
-	if prop = "" then Return Me
+	If BANano.IsUndefined(prop) Or BANano.IsNull(prop) Then prop = ""
+	If BANano.IsUndefined(value) Or BANano.IsNull(value) Then value = ""
+	If prop = "" Then Return Me
 	properties.put(prop, value)
 	If mElement <> Null Then 
 		mElement.SetAttr(prop, value)
@@ -655,11 +655,11 @@ End Sub
 
 'set a single style
 Sub SetStyleSingle(prop As String, value As String) As VRouterView
-	If BANano.IsUndefined(prop) or BANano.IsNull(prop) Then prop = ""
-	If BANano.IsUndefined(value) or BANano.IsNull(value) Then value = ""
-	if prop = "" then return me
+	If BANano.IsUndefined(prop) Or BANano.IsNull(prop) Then prop = ""
+	If BANano.IsUndefined(value) Or BANano.IsNull(value) Then value = ""
+	If prop = "" Then Return Me
 	styles.put(prop, value)
-	dim m as map = createmap()
+	Dim m As Map = CreateMap()
 	m.put(prop, value)
 	Dim jsonStyle As String = BANano.ToJson(m)
 	SetStyle(jsonStyle)
@@ -680,10 +680,10 @@ Sub Build(props As Map, styleProps As Map, classNames As List, loose As List) As
 		Next
 	End If
 	If styleProps <> Null Then
-		for each k as string in styleprops.Keys
-			dim v as string = styleprops.get(k)
+		For Each k As String In styleProps.Keys
+			Dim v As String = styleProps.get(k)
 			SetStyleSingle(k, v)
-		next
+		Next
 	End If
 	If classNames <> Null Then
 		AddClass(classNames)
@@ -697,13 +697,13 @@ Public Sub GetHtml() As String
 End Sub
 
 'bind classes
-Sub SetVClass(classObj as string) As VRouterView
+Sub SetVClass(classObj As String) As VRouterView
 	SetVBind("class", classObj)
 	Return Me
 End Sub
 
 'bind styles
-Sub SetVStyle(styleObj as string) As VRouterView
+Sub SetVStyle(styleObj As String) As VRouterView
 	SetVBind("style", styleObj)
 	Return Me
 End Sub
@@ -730,7 +730,7 @@ End Sub
 'set text color
 Sub SetTextColor1(varColor As String) As VRouterView
 	Dim sColor As String = $"${varColor}--text"$
-	AddClass(array(sColor))
+	AddClass(Array(sColor))
 	Return Me
 End Sub
 

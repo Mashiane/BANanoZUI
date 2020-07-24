@@ -108,9 +108,10 @@ Module5=VMElement
 Module6=VRouterLink
 Module7=VRouterView
 Module8=VueApp
+Module9=ZUIZcanvas
 NumberOfFiles=48
 NumberOfLibraries=3
-NumberOfModules=8
+NumberOfModules=9
 Version=8.5
 @EndOfDesignText@
 #Region Project Attributes 
