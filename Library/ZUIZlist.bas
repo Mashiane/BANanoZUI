@@ -9,7 +9,8 @@ Version=7
 
 
 #DesignerProperty: Key: Items, DisplayName: Items, FieldType: String, DefaultValue:  , Description: 
-#DesignerProperty: Key: PerPage, DisplayName: PerPage, FieldType: String, DefaultValue: 5 , Description: 
+#DesignerProperty: Key: PerPage, DisplayName: PerPage, FieldType: String, DefaultValue: , Description: 
+#DesignerProperty: Key: Slot, DisplayName: Slot, FieldType: String, DefaultValue: extension , Description: 
 #DesignerProperty: Key: Text, DisplayName: Text, FieldType: String, DefaultValue: , Description: Text on the element
 #DesignerProperty: Key: Classes, DisplayName: Classes, FieldType: String, DefaultValue: , Description: Classes added to the HTML tag.
 #DesignerProperty: Key: Style, DisplayName: Style, FieldType: String, DefaultValue: , Description: Styles added to the HTML tag. Must be a json String.
@@ -17,7 +18,6 @@ Version=7
 #DesignerProperty: Key: Key, DisplayName: Key, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: ParentId, DisplayName: ParentId, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: Ref, DisplayName: Ref, FieldType: String, DefaultValue:  , Description: 
-#DesignerProperty: Key: Slot, DisplayName: Slot, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VBindClass, DisplayName: VBindClass, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VBindStyle, DisplayName: VBindStyle, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VElse, DisplayName: VElse, FieldType: String, DefaultValue:  , Description: 
@@ -71,7 +71,7 @@ Public methods As Map
 Private mItems As String = ""
 Private mKey As String = ""
 Private mParentId As String = ""
-Private mPerPage As String = "5"
+Private mPerPage As String = ""
 Private mRef As String = ""
 Private mSlot As String = ""
 Private mVBindClass As String = ""
@@ -427,8 +427,8 @@ public Sub setStyle(varStyle As String)
 If mElement <> Null Then
 mElement.SetStyle(varStyle)
 End If
-Dim mres as Map = BANano.FromJSON(varStyle)
-For each k As String in mres.Keys
+Dim mres As Map = BANano.FromJSON(varStyle)
+For Each k As String In mres.Keys
 Dim v As String = mres.Get(k)
 styleList.put(k, v)
 Next

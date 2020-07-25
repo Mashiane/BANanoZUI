@@ -7,10 +7,45 @@ Version=8.5
 #IgnoreWarnings:12
 Sub Class_Globals
 	Private z As BANanoObject
+	Private ZUI_Style As Map
+	'
+	Public const SIZE_XXL As String = "xxl"
+	Public const SIZE_XL As String = "xl"
+	Public const SIZE_L As String = "l"
+	Public const SIZE_M As String = "m"
+	Public const SIZE_S As String = "s"
+	Public const SIZE_XS As String = "xs"
+	Public const SIZE_XXS As String = "xxs"
+	'
+	Public const MODE_LIGHT As String = "light"
+	Public const MODE_LIGHT_FILLED As String = "light-filled"
+	Public const MODE_DARK As String = "dark"
+	Public const MODE_DARK_FILLED As String = "dark-filled"
+	'
+	Public const THEME_WHITE As String = "white"
+	Public const THEME_LIGHT_BLUE As String = "light-blue"
+	Public const THEME_BLUE As String = "blue"
+	Public const THEME_GREEN As String = "green"
+	Public const THEME_ORANGE As String = "orange"
+	Public const THEME_YELLOW As String = "yellow"
+	Public const THEME_RED As String = "red"
+	Public const THEME_PURPLE As String = "purple"
+	Public const THEME_BLACK As String = "black"
+	Public const THEME_GRAY As String = "gray"
+	'
+	Public const SLOT_EXTENSION As String = "extension"
+	Public const SLOT_MEDIA As String = "media"
+	Public const SLOT_DEFAULT As String = ""
+	'
+	Public const POS_TOP As String = "top"
+	Public const POS_LEFT As String = "left"
+	Public const POS_BOTTOM As String = "bottom"
+	Public const POS_RIGHT As String = "right"
 End Sub
 
 Public Sub Initialize(zui As BANanoObject) As ZircleUI
 	z = zui
+	ZUI_Style.Initialize
 	Return Me
 End Sub
 
@@ -32,3 +67,136 @@ Sub GetParams(prop As String) As BANanoObject
 	item = bo.GetField(prop)
 	Return item
 End Sub
+
+'set the theme of the zui
+Sub SetTheme1(scolor As String, sintensity As String) As ZircleUI
+	ZUI_Style.Put("theme", scolor)
+	ZUI_Style.Put("mode", sintensity)
+	Return Me
+End Sub
+
+'set the theme of the zui
+Sub SetTheme(scolor As String) As ZircleUI
+	ZUI_Style.Put("theme", scolor)
+	Return Me
+End Sub
+
+'set the mode of the zui
+Sub SetMode(smode As String) As ZircleUI
+	ZUI_Style.Put("mode", smode)
+	Return Me
+End Sub
+
+Sub Refresh
+	Dim config As Map = CreateMap()
+	config.Put("style", ZUI_Style)
+	z.RunMethod("config", config)
+End Sub
+
+'add a view to the canvas
+Sub AddView(Module As Object, vID As String, vLabel As String, vSize As String, vLabelPos As String, vSlider As Boolean, vProgress As Int, vImagePath As String, vSlot As String, Text As String) As ZUIZview
+	'
+	Dim parentID As String = "placeholder"
+	vID = vID.tolowercase
+	'
+	parentID = parentID.Replace("#","")
+	vID = vID.Replace("#","")
+	
+	Dim zv As ZUIZview
+	zv.Initialize(Module, vID, vID)
+	zv.Label = vLabel
+	zv.Size = vSize
+	If vLabelPos <> "" Then zv.LabelPos = vLabelPos
+	zv.Slider = vSlider
+	zv.Progress = vProgress
+	If vSlot <> "" Then zv.Slot = vSlot
+	If vImagePath <> "" Then zv.ImagePath = vImagePath
+	zv.SetText(Text)
+	'
+	zv.AddToParent(parentID)
+	'
+	Return zv
+End Sub
+
+'add a list, usually to a view
+Sub AddList(Module As Object, parentID As String, vID As String, vSlot As String, vItems As String, vPerPage As String) As ZUIZlist
+	parentID = parentID.tolowercase
+	vID = vID.tolowercase
+	'
+	parentID = parentID.Replace("#","")
+	vID = vID.Replace("#","")
+	'
+	Dim zl As ZUIZlist
+	zl.Initialize(Module, vID, vID)
+	zl.Slot = vSlot
+	zl.Items = vItems
+	zl.PerPage = vPerPage
+	
+	zl.AddToParent(parentID)
+	
+	Return zl
+	
+End Sub
+
+'add a spot to a view
+Sub AddSpot(Module As Object, parentID As String, vID As String, vLabel As String, vSize As String, vDistance As String, vAngle As String, vToView As String, vSlider As Boolean, vProgress As Int, vImagePath As String, vSlot As String,  Text As String) As ZUIZspot
+	'
+	parentID = parentID.tolowercase
+	vID = vID.tolowercase
+	'
+	parentID = parentID.Replace("#","")
+	vID = vID.Replace("#","")
+	
+	Dim zv As ZUIZspot
+	zv.Initialize(Module, vID, vID)
+	zv.Label = vLabel
+	zv.Size = vSize
+	zv.Slider = vSlider
+	zv.Progress = vProgress
+	If vImagePath <> "" Then zv.ImagePath = vImagePath
+	If vSlot <> "" Then zv.Slot = vSlot
+	zv.Distance = vDistance
+	zv.Angle = vAngle
+	zv.ToView = vToView
+	zv.SetText(Text)
+	'
+	zv.AddToParent(parentID)
+	'
+	Return zv
+End Sub
+
+
+
+'create a view for a component
+Sub CreateView(Module As Object, vID As String, vLabel As String, vSize As String, vLabelPos As String, vSlider As Boolean, vProgress As Int, vImagePath As String, vSlot As String, Text As String) As ZUIZview
+	vID = vID.tolowercase
+	vID = vID.Replace("#","")
+	
+	Dim zv As ZUIZview
+	zv.Initialize(Module, vID, vID)
+	zv.Label = vLabel
+	zv.Size = vSize
+	If vLabelPos <> "" Then zv.LabelPos = vLabelPos
+	zv.Slider = vSlider
+	zv.Progress = vProgress
+	If vSlot <> "" Then zv.Slot = vSlot
+	If vImagePath <> "" Then zv.ImagePath = vImagePath
+	zv.SetText(Text)
+	'
+	Return zv
+End Sub
+
+'create a slide from a template
+Sub CreateComponent(Module As Object, slideName As String, templateName As String) As VMElement
+	templateName = templateName.ToLowerCase
+	templateName = templateName.Replace("#","")
+	slideName = slideName.tolowercase
+	'create a component
+	Dim slide As VMElement
+	slide.Initialize(Module, slideName, slideName)
+	'set the contents from the home layout
+	slide.SetBANanoTemplate($"#${templateName}"$)
+	'return the component
+	Return slide
+End Sub
+

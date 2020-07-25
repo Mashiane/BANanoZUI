@@ -100,6 +100,8 @@ Sub Class_Globals
 	Public state As Map
 	Public ZUICanvas As ZUIZcanvas
 	Private body As BANanoElement
+	'
+	
 End Sub
 
 'initialize the app with where to render and where to .GetHTML
@@ -158,7 +160,7 @@ Public Sub Initialize(Module As Object) As VueApp
 	placeholder.SetVShow("placeholder")
 	placeholder.AddToParent("app")
 	placeholder.AddToApp(Me)
-	
+	'
 	Return Me
 End Sub
 
@@ -1216,7 +1218,7 @@ Sub AddHTMLElement(Module As Object, parentID As String, elID As String, tag As 
 	BANano.GetElement($"#${parentID}"$).Append(sElement)
 End Sub
 
-'create a slide
+'create a slide from a template
 Sub ZuiCreateSlide(Module As Object, slideName As String, templateName As String) As VMElement
 	templateName = templateName.ToLowerCase
 	templateName = templateName.Replace("#","")

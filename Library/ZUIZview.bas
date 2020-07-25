@@ -16,11 +16,12 @@ Version=7
 #DesignerProperty: Key: Key, DisplayName: Key, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: Label, DisplayName: Label, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: LabelPos, DisplayName: LabelPos, FieldType: String, DefaultValue: bottom , Description: , List: top|left|bottom|right
+#DesignerProperty: Key: Slot, DisplayName: Slot, FieldType: String, DefaultValue: , Description: , 
 #DesignerProperty: Key: ParentId, DisplayName: ParentId, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: Progress, DisplayName: Progress, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: Ref, DisplayName: Ref, FieldType: String, DefaultValue:  , Description: 
-#DesignerProperty: Key: Size, DisplayName: Size, FieldType: String, DefaultValue: xxl , Description: , List: xxl|xl|large|medium|small|xs|xxs
-#DesignerProperty: Key: Slider, DisplayName: Slider, FieldType: Boolean, DefaultValue: False , Description: 
+#DesignerProperty: Key: Size, DisplayName: Size, FieldType: String, DefaultValue: , Description: , List: xxl|xl|large|medium|small|xs|xxs
+#DesignerProperty: Key: Slider, DisplayName: Slider, FieldType: Boolean, DefaultValue: , Description: 
 #DesignerProperty: Key: VBindClass, DisplayName: VBindClass, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VBindStyle, DisplayName: VBindStyle, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VElse, DisplayName: VElse, FieldType: String, DefaultValue:  , Description: 
@@ -74,11 +75,11 @@ Public methods As Map
 Private mImagePath As String = ""
 Private mKey As String = ""
 Private mLabel As String = ""
-Private mLabelPos As String = "bottom"
+Private mLabelPos As String = ""
 Private mParentId As String = ""
-Private mProgress As String = "0"
+Private mProgress As String = ""
 Private mRef As String = ""
-Private mSize As String = "xxl"
+Private mSize As String = ""
 Private mSlider As Boolean = False
 Private mVBindClass As String = ""
 Private mVBindStyle As String = ""
@@ -111,6 +112,7 @@ Private mPaddingTop As String = ""
 Private mTextAlign As String = ""
 Private mTextDecoration As String = ""
 Private mWidth As String = ""
+Private mSlot As String = ""
 End Sub
 
 'initialize the custom view
@@ -174,8 +176,10 @@ mPaddingTop = Props.Get("PaddingTop")
 mTextAlign = Props.Get("TextAlign")
 mTextDecoration = Props.Get("TextDecoration")
 mWidth = Props.Get("Width")
+mSlot = Props.Get("Slot")
 End If
 
+	AddAttr("slot", mSlot)
 AddAttr("image-path", mImagePath)
 AddAttr("key", mKey)
 AddAttr("label", mLabel)
@@ -355,7 +359,7 @@ public Sub AddClass(varClass As String)
 If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
-if varClass = "" Then Return
+If varClass = "" Then Return
 If mElement <> Null Then mElement.AddClass(varClass)
 Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
 For Each mt As String In mxItems
@@ -364,9 +368,9 @@ Next
 End Sub
 
 'add a class on condition
-public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As boolean)
+public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As Boolean)
 If BANano.IsUndefined(varCondition) Or BANano.IsNull(varCondition) Then Return
-if varShouldBe <> varCondition Then Return
+If varShouldBe <> varCondition Then Return
 If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
@@ -427,7 +431,7 @@ End Sub
 Public Sub getClasses() As String
 Dim sbClass As StringBuilder
 sbClass.Initialize
-For each k As String in classList.Keys
+For Each k As String In classList.Keys
 sbClass.Append(k).Append(" ")
 Next
 mClasses = sbClass.ToString
@@ -439,8 +443,8 @@ public Sub setStyle(varStyle As String)
 If mElement <> Null Then
 mElement.SetStyle(varStyle)
 End If
-Dim mres as Map = BANano.FromJSON(varStyle)
-For each k As String in mres.Keys
+Dim mres As Map = BANano.FromJSON(varStyle)
+For Each k As String In mres.Keys
 Dim v As String = mres.Get(k)
 styleList.put(k, v)
 Next
@@ -451,7 +455,7 @@ public Sub getStyle() As String
 Dim sbStyle As StringBuilder
 sbStyle.Initialize
 sbStyle.Append("{")
-For each k As String in styleList.Keys
+For Each k As String In styleList.Keys
 Dim v As String = styleList.Get(k)
 sbStyle.Append(k).Append(":").Append(v).Append(",")
 Next
@@ -485,7 +489,7 @@ End Sub
 public Sub getAttributes() As String
 Dim sbAttr As StringBuilder
 sbAttr.Initialize
-For each k As String in attributeList.Keys
+For Each k As String In attributeList.Keys
 Dim v As String = attributeList.Get(k)
 sbAttr.Append(k).Append("=").Append(v).Append(";")
 Next
@@ -513,6 +517,16 @@ End Sub
 
 public Sub getImagePath() As String
 Return mImagePath
+End Sub
+
+
+public Sub setSlot(varSlot As String)
+AddAttr("slot", varSlot)
+mSlot = varSlot
+End Sub
+
+public Sub getSlot() As String
+Return mSlot
 End Sub
 
 public Sub setKey(varKey As String)

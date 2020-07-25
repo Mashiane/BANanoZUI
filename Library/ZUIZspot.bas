@@ -19,7 +19,7 @@ Version=7
 #DesignerProperty: Key: Button, DisplayName: Button, FieldType: Boolean, DefaultValue: False , Description: 
 #DesignerProperty: Key: Distance, DisplayName: Distance, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: ImagePath, DisplayName: ImagePath, FieldType: String, DefaultValue:  , Description: 
-#DesignerProperty: Key: Knob, DisplayName: Knob, FieldType: Boolean, DefaultValue: False , Description: 
+#DesignerProperty: Key: Knob, DisplayName: Knob, FieldType: Boolean, DefaultValue: , Description: 
 #DesignerProperty: Key: Progress, DisplayName: Progress, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: QtySync, DisplayName: QtySync, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: Ref, DisplayName: Ref, FieldType: String, DefaultValue:  , Description: 
@@ -84,17 +84,17 @@ Public bindings As Map
 Public methods As Map
 Private mAngle As String = "0"
 Private mButton As Boolean = False
-Private mDistance As String = "100"
+Private mDistance As String = ""
 Private mImagePath As String = ""
 Private mIndex As String = ""
 Private mKey As String = ""
 Private mKnob As Boolean = False
 Private mLabel As String = ""
 Private mParentId As String = ""
-Private mProgress As String = "0"
-Private mQtySync As String = "0"
+Private mProgress As String = ""
+Private mQtySync As String = ""
 Private mRef As String = ""
-Private mSize As String = "medium"
+Private mSize As String = ""
 Private mSlider As Boolean = False
 Private mSlot As String = ""
 Private mSlotScope As String = ""
@@ -439,8 +439,10 @@ public Sub AddAttr(varProp As String, varValue As String)
 	If BANano.IsNumber(varValue) Then varValue = BANanoShared.CStr(varValue)
 	'we are adding a boolean
 	If BANano.IsBoolean(varValue) Then
-		attributeList.put(varProp, varValue)
-		If mElement <> Null Then mElement.SetAttr(varProp, varValue)
+		If varValue = True Then 
+			attributeList.put(varProp, varValue)
+			If mElement <> Null Then mElement.SetAttr(varProp, varValue)
+		End If
 	Else
 		'we are adding a string
 		If varValue.StartsWith(":") Then
