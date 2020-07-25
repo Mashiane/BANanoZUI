@@ -43,6 +43,6 @@ ModuleClosedNodes6=
 ModuleClosedNodes7=
 ModuleClosedNodes8=
 ModuleClosedNodes9=
-NavigationStack=VMElement,DesignerCreateView,172,0,ZircleUI,AddView,115,5,ZircleUI,AddSpot,153,6,ZircleUI,AddList,130,6,ZUIZview,Initialize,115,0,ZUIZview,Class_Globals,61,0,ZUIZlist,Class_Globals,89,0,ZUIZlist,Initialize,114,0,ZUIZspot,Initialize,131,0,ZUIZspot,Class_Globals,71,1
+NavigationStack=VueApp,Initialize,144,0,ZircleUI,Class_Globals,37,4,ZircleUI,Initialize,42,1,VueApp,Class_Globals,9,0,VueApp,InitColors,419,0,VueApp,AddTheme,433,0,ZUIZspot,SetValues,1027,0,ZUIZspot,Class_Globals,129,0,ZUIZspot,Initialize,142,0,ZUIZspot,SetColors,1037,6
 SelectedBuild=0
 VisibleModules=8,9,13,5,14,12

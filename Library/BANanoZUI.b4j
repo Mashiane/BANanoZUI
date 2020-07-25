@@ -124,7 +124,7 @@ Version=8.5
 	#MainFormHeight: 600 
 	#IgnoreWarnings: 16, 10, 14, 15, 19
 	#LibraryAuthor: Anele Mbanga (Mashiane)
-	#LibraryVersion: 1.00
+	#LibraryVersion: 1.01
 #End Region
 
 #Region Notes
@@ -135,7 +135,7 @@ Version=8.5
 
 Sub Process_Globals
 	Private BANano As BANano 'ignore
-	Public Version As String = "1.00"
+	Public Version As String = "1.01"
 	Public AppName As String = "BANanoZUI"
 End Sub
 

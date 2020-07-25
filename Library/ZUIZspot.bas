@@ -132,6 +132,7 @@ Private mPaddingTop As String = ""
 Private mTextAlign As String = ""
 Private mTextDecoration As String = ""
 Private mWidth As String = ""
+Private mValues As Map
 End Sub
 
 'initialize the custom view
@@ -145,6 +146,7 @@ attributeList.Initialize
 sbText.Initialize
 bindings.Initialize
 methods.Initialize
+mValues.Initialize 
 End Sub
 
 'Create view in the designer
@@ -330,6 +332,22 @@ Sub AddHR
 sbText.Append("<hr>")
 End Sub
 
+'set the slot to an extension
+Sub SlotExtension
+	setSlot("extension")
+End Sub
+
+'add spot to view
+Sub AddToView(vName As ZUIZview)
+	AddToParent(vName.ID)
+End Sub
+
+'add spot to list
+Sub AddToList(vName As ZUIZlist)
+	AddToParent(vName.ID)
+End Sub
+
+
 'add an element to the text
 Sub AddElement(elID As String, tag As String, props As Map, styleProps As Map, classNames As List, loose As List, Text As String)
 elID = elID.tolowercase
@@ -397,7 +415,7 @@ public Sub AddClass(varClass As String)
 If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
-if varClass = "" Then Return
+If varClass = "" Then Return
 If mElement <> Null Then mElement.AddClass(varClass)
 Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
 For Each mt As String In mxItems
@@ -406,9 +424,9 @@ Next
 End Sub
 
 'add a class on condition
-public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As boolean)
+public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As Boolean)
 If BANano.IsUndefined(varCondition) Or BANano.IsNull(varCondition) Then Return
-if varShouldBe <> varCondition Then Return
+If varShouldBe <> varCondition Then Return
 If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
@@ -483,8 +501,8 @@ public Sub setStyle(varStyle As String)
 If mElement <> Null Then
 mElement.SetStyle(varStyle)
 End If
-Dim mres as Map = BANano.FromJSON(varStyle)
-For each k As String in mres.Keys
+Dim mres As Map = BANano.FromJSON(varStyle)
+For Each k As String In mres.Keys
 Dim v As String = mres.Get(k)
 styleList.put(k, v)
 Next
@@ -495,7 +513,7 @@ public Sub getStyle() As String
 Dim sbStyle As StringBuilder
 sbStyle.Initialize
 sbStyle.Append("{")
-For each k As String in styleList.Keys
+For Each k As String In styleList.Keys
 Dim v As String = styleList.Get(k)
 sbStyle.Append(k).Append(":").Append(v).Append(",")
 Next
@@ -529,7 +547,7 @@ End Sub
 public Sub getAttributes() As String
 Dim sbAttr As StringBuilder
 sbAttr.Initialize
-For each k As String in attributeList.Keys
+For Each k As String In attributeList.Keys
 Dim v As String = attributeList.Get(k)
 sbAttr.Append(k).Append("=").Append(v).Append(";")
 Next
@@ -641,7 +659,7 @@ Return mProgress
 End Sub
 
 public Sub setQtySync(varQtySync As String)
-AddAttr("qty.sync", varQtySync)
+AddAttr(":qty.sync", varQtySync)
 mQtySync = varQtySync
 End Sub
 
@@ -1000,4 +1018,27 @@ public Sub getWidth() As String
 Return mWidth
 End Sub
 
+'set values for the knob
+public Sub SetValues(qty As Int, unit As String, minValue As Int, maxValue As Int, pos As String)
+	If BANano.IsNull(qty) = False Then 
+		mValues.Put("qty", BANano.parseInt(qty))
+	End If
+	If BANano.IsNull(unit) = False Then mValues.Put("unit", unit)
+	If BANano.IsNull(minValue) = False Then 
+		mValues.Put("min", BANano.parseInt(minValue))
+	End If
+	If BANano.IsNull(maxValue) = False Then 
+		mValues.Put("max", BANano.parseInt(maxValue))
+	End If
+	If BANano.IsNull(pos) = False Then mValues.Put("pos", pos)
+End Sub
 
+public Sub GetValues() As Map
+	Return mValues
+End Sub
+
+'set the colors
+Sub SetColors(white As String, black As String)
+	Dim sColors As String = $"{white: '${white}', black: '${black}'}"$
+	AddAttr("colors", sColors)
+End Sub

@@ -880,4 +880,7 @@ public Sub getWidth() As String
 Return mWidth
 End Sub
 
-
+'add view to placeholder
+Sub AddToPlaceholder
+	AddToParent("placeholder")
+End Sub

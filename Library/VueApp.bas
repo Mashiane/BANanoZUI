@@ -134,7 +134,6 @@ Public Sub Initialize(Module As Object) As VueApp
 	Options.Initialize
 	Modules.Initialize
 	Themes.Initialize 
-	ColorMap.Initialize
 	'
 	'
 	SetBeforeCreate(Module, "BeforeCreate")
@@ -446,6 +445,16 @@ Sub AddTheme(themeName As String, ForeColor As String, ForeColorIntensity As Str
 	Themes.Put(themeName, classLine)
 End Sub
 
+Sub GetHexColor(Color As String, Intensity As String) As String
+	Dim sCode As String = $"${Color} ${Intensity}"$
+	sCode = sCode.Trim
+	'
+	Dim hexColor As String = ""
+	If ColorMap.ContainsKey(sCode) Then
+		hexColor = ColorMap.Get(sCode)
+	End If
+	Return hexColor	
+End Sub
 
 'get a hex color from provided colors
 Sub GetColorHex(sColor As String) As String

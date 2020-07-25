@@ -1025,6 +1025,11 @@ Sub BANanoGetHTML(id As String) As String
 	Return sTemplate
 End Sub
 
+Sub TemplateFromPlaceholder
+	'set the contents from the home layout
+	SetBANanoTemplate("#placeholder")
+End Sub
+
 #End Region
 
 #Region Internal Events
