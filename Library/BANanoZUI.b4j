@@ -103,9 +103,10 @@ Library3=banano
 Module1=|absolute|C:\Users\anelembanga\Documents\MEGA\MyApps\b4j\Shared\BANanoShared
 Module10=ZUIZcanvas
 Module11=ZUIZdialog
-Module12=ZUIZlist
-Module13=ZUIZspot
-Module14=ZUIZview
+Module12=ZUIZimage
+Module13=ZUIZlist
+Module14=ZUIZspot
+Module15=ZUIZview
 Module2=VA
 Module3=VApp
 Module4=VHTML
@@ -116,7 +117,7 @@ Module8=VueApp
 Module9=ZircleUI
 NumberOfFiles=48
 NumberOfLibraries=3
-NumberOfModules=14
+NumberOfModules=15
 Version=8.5
 @EndOfDesignText@
 #Region Project Attributes 
@@ -124,7 +125,7 @@ Version=8.5
 	#MainFormHeight: 600 
 	#IgnoreWarnings: 16, 10, 14, 15, 19
 	#LibraryAuthor: Anele Mbanga (Mashiane)
-	#LibraryVersion: 1.01
+	#LibraryVersion: 1.03
 #End Region
 
 #Region Notes
@@ -135,7 +136,7 @@ Version=8.5
 
 Sub Process_Globals
 	Private BANano As BANano 'ignore
-	Public Version As String = "1.01"
+	Public Version As String = "1.03"
 	Public AppName As String = "BANanoZUI"
 End Sub
 

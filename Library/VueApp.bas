@@ -150,7 +150,6 @@ Public Sub Initialize(Module As Object) As VueApp
 	'add the canvas to the page
 	ZUICanvas.Initialize(Module, "canvas", "canvas")
 	ZUICanvas.Views = "$options.components"
-	ZUICanvas.AddToParent("app")
 	
 	'add the placeholder div to the app
 	Dim placeholder As VHTML
@@ -965,6 +964,7 @@ Sub Serve
 	store = VAP.RunMethod("observable", Array(state))
 	VAP.GetField("prototype").SetField("$store", store)
 	'
+	ZUICanvas.AddToParent("app")
 	ZUICanvas.AddToApp(Me)
 	
 	'sourceID = sourceID.Replace("#","")

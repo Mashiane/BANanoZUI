@@ -63,6 +63,13 @@ Version=7
 #DesignerProperty: Key: TextAlign, DisplayName: TextAlign, FieldType: String, DefaultValue:  , Description: , List: left|center|right|justify
 #DesignerProperty: Key: TextDecoration, DisplayName: TextDecoration, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: Width, DisplayName: Width, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: BackgroundImage, DisplayName: BackgroundImage, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: BackgroundRepeat, DisplayName: BackgroundRepeat, FieldType: String, DefaultValue:  , Description: , List: repeat|repeat-x|repeat-y|no-repeat|initial|inherit
+#DesignerProperty: Key: BorderColor, DisplayName: BorderColor, FieldType: String, DefaultValue:  , Description: , List: amber|black|blue|blue-grey|brown|cyan|deep-orange|deep-purple|green|grey|indigo|light-blue|light-green|lime|orange|pink|purple|red|teal|transparent|white|yellow|primary|secondary|accent|error|info|success|warning|none
+#DesignerProperty: Key: BorderRadius, DisplayName: BorderRadius, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: BorderStyle, DisplayName: BorderStyle, FieldType: String, DefaultValue:  , Description: , List: none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset|initial|inherit
+#DesignerProperty: Key: BorderWidth, DisplayName: BorderWidth, FieldType: String, DefaultValue:  , Description: 
+
 
 Sub Class_Globals
 Private BANano As BANano 'ignore
@@ -132,7 +139,14 @@ Private mPaddingTop As String = ""
 Private mTextAlign As String = ""
 Private mTextDecoration As String = ""
 Private mWidth As String = ""
-Private mValues As Map
+	Private mValues As Map
+	Private mBackgroundImage As String
+	Private mBackgroundRepeat As String
+	Private mBorderColor As String
+	Private mBorderRadius As String
+	Private mBorderStyle As String
+	Private mBorderWidth As String
+
 End Sub
 
 'initialize the custom view
@@ -206,7 +220,14 @@ mPaddingRight = Props.Get("PaddingRight")
 mPaddingTop = Props.Get("PaddingTop")
 mTextAlign = Props.Get("TextAlign")
 mTextDecoration = Props.Get("TextDecoration")
-mWidth = Props.Get("Width")
+		mWidth = Props.Get("Width")
+		mBackgroundImage = Props.Get("BackgroundImage")
+		mBackgroundRepeat = Props.Get("BackgroundRepeat")
+		mBorderColor = Props.Get("BorderColor")
+		mBorderRadius = Props.Get("BorderRadius")
+		mBorderStyle = Props.Get("BorderStyle")
+		mBorderWidth = Props.Get("BorderWidth")
+
 End If
 
 AddAttr("angle", mAngle)
@@ -258,7 +279,14 @@ AddStyle("padding-right", mPaddingRight)
 AddStyle("padding-top", mPaddingTop)
 AddStyle("text-align", mTextAlign)
 AddStyle("text-decoration", mTextDecoration)
-AddStyle("width", mWidth)
+	AddStyle("width", mWidth)
+	AddStyle("background-image", mBackgroundImage)
+	AddStyle("background-repeat", mBackgroundRepeat)
+	AddStyle("border-color", mBorderColor)
+	AddStyle("border-radius", mBorderRadius)
+	AddStyle("border-style", mBorderStyle)
+	AddStyle("border-width", mBorderWidth)
+
 AddClass(mClasses)
 setAttributes(mAttributes)
 setStyles(mStyle)
@@ -281,7 +309,7 @@ Dim styleName As String = BANanoShared.BuildStyle(styleList)
 AddAttr("style", styleName)
 'build element internal structure
 Dim iStructure As String = BANanoShared.BuildAttributes(attributeList)
-Dim rslt As String = $"<${mTagName} id="${mName}" ${iStructure}>${mText}</${mTagName}>"$
+	Dim rslt As String = $"<${mTagName} id="${mName}" ${iStructure}>${mText}${sbText.tostring}</${mTagName}>"$
 Return rslt
 End Sub
 
@@ -1042,3 +1070,61 @@ Sub SetColors(white As String, black As String)
 	Dim sColors As String = $"{white: '${white}', black: '${black}'}"$
 	AddAttr("colors", sColors)
 End Sub
+
+
+
+public Sub setBackgroundImage(varBackgroundImage As String)
+	AddStyle("background-image", varBackgroundImage)
+	mBackgroundImage = varBackgroundImage
+End Sub
+
+public Sub getBackgroundImage() As String
+	Return mBackgroundImage
+End Sub
+
+public Sub setBackgroundRepeat(varBackgroundRepeat As String)
+	AddStyle("background-repeat", varBackgroundRepeat)
+	mBackgroundRepeat = varBackgroundRepeat
+End Sub
+
+public Sub getBackgroundRepeat() As String
+	Return mBackgroundRepeat
+End Sub
+
+public Sub setBorderColor(varBorderColor As String)
+	AddStyle("border-color", varBorderColor)
+	mBorderColor = varBorderColor
+End Sub
+
+public Sub getBorderColor() As String
+	Return mBorderColor
+End Sub
+
+public Sub setBorderRadius(varBorderRadius As String)
+	AddStyle("border-radius", varBorderRadius)
+	mBorderRadius = varBorderRadius
+End Sub
+
+public Sub getBorderRadius() As String
+	Return mBorderRadius
+End Sub
+
+public Sub setBorderStyle(varBorderStyle As String)
+	AddStyle("border-style", varBorderStyle)
+	mBorderStyle = varBorderStyle
+End Sub
+
+public Sub getBorderStyle() As String
+	Return mBorderStyle
+End Sub
+
+public Sub setBorderWidth(varBorderWidth As String)
+	AddStyle("border-width", varBorderWidth)
+	mBorderWidth = varBorderWidth
+End Sub
+
+public Sub getBorderWidth() As String
+	Return mBorderWidth
+End Sub
+
+
