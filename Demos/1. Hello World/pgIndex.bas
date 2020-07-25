@@ -15,7 +15,7 @@ End Sub
 Sub Init
 	BANano.LoadLayout("#body", "testlayout")
 	'initialize the vue instance, we will render it to #app div element
-	MyApp.Initialize(Me, "#app", "#body")	
+	MyApp.Initialize(Me)	
 	'test global state
 	MyApp.SetData("count", 0)
 	'add the method

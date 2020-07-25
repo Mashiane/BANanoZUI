@@ -8,14 +8,16 @@ Version=7
 'Custom BANano View class
 
 
+#DesignerProperty: Key: Items, DisplayName: Items, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: PerPage, DisplayName: PerPage, FieldType: String, DefaultValue: 5 , Description: 
 #DesignerProperty: Key: Text, DisplayName: Text, FieldType: String, DefaultValue: , Description: Text on the element
 #DesignerProperty: Key: Classes, DisplayName: Classes, FieldType: String, DefaultValue: , Description: Classes added to the HTML tag.
 #DesignerProperty: Key: Style, DisplayName: Style, FieldType: String, DefaultValue: , Description: Styles added to the HTML tag. Must be a json String.
 #DesignerProperty: Key: Attributes, DisplayName: Attributes, FieldType: String, DefaultValue: , Description: Attributes added to the HTML tag. Must be a json String.
-#DesignerProperty: Key: Views, DisplayName: Views, FieldType: String, DefaultValue: $options.components , Description: 
 #DesignerProperty: Key: Key, DisplayName: Key, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: ParentId, DisplayName: ParentId, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: Ref, DisplayName: Ref, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Slot, DisplayName: Slot, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VBindClass, DisplayName: VBindClass, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VBindStyle, DisplayName: VBindStyle, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VElse, DisplayName: VElse, FieldType: String, DefaultValue:  , Description: 
@@ -62,14 +64,16 @@ Private mText As String = ""
 Private classList As Map
 Private styleList As Map
 Private attributeList As Map
-Private mTagName As String = "z-canvas"
+Private mTagName As String = "z-list"
 Private sbText As StringBuilder
 Public bindings As Map
 Public methods As Map
-Private mViews As String = "$options.components"
+Private mItems As String = ""
 Private mKey As String = ""
 Private mParentId As String = ""
+Private mPerPage As String = "5"
 Private mRef As String = ""
+Private mSlot As String = ""
 Private mVBindClass As String = ""
 Private mVBindStyle As String = ""
 Private mVElse As String = ""
@@ -124,10 +128,12 @@ mClasses = Props.Get("Classes")
 mAttributes = Props.Get("Attributes")
 mStyle = Props.Get("Style")
 mText = Props.Get("Text")
-mViews = Props.Get("Views")
+mItems = Props.Get("Items")
 mKey = Props.Get("Key")
 mParentId = Props.Get("ParentId")
+mPerPage = Props.Get("PerPage")
 mRef = Props.Get("Ref")
+mSlot = Props.Get("Slot")
 mVBindClass = Props.Get("VBindClass")
 mVBindStyle = Props.Get("VBindStyle")
 mVElse = Props.Get("VElse")
@@ -161,10 +167,12 @@ mTextDecoration = Props.Get("TextDecoration")
 mWidth = Props.Get("Width")
 End If
 
-AddAttr(":views", mViews)
+AddAttr(":items", mItems)
 AddAttr("key", mKey)
 AddAttr("parent-id", mParentId)
+AddAttr("per-page", mPerPage)
 AddAttr("ref", mRef)
+AddAttr("slot", mSlot)
 AddAttr("v-bind:class", mVBindClass)
 AddAttr("v-bind:style", mVBindStyle)
 AddAttr("v-else", mVElse)
@@ -337,8 +345,8 @@ If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
 If varClass = "" Then Return
 If mElement <> Null Then mElement.AddClass(varClass)
-Dim mItems As List = BANanoShared.StrParse(" ", varClass)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
+For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
 End Sub
@@ -352,8 +360,8 @@ If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
 If varClass = "" Then Return
 If mElement <> Null Then mElement.AddClass(varClass)
-Dim mItems As List = BANanoShared.StrParse(" ", varClass)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
+For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
 End Sub
@@ -368,7 +376,7 @@ aStyle.put(varProp, varStyle)
 Dim sStyle As String = BANano.ToJSON(aStyle)
 mElement.SetStyle(sStyle)
 End If
-styleList.put(varProp, varStyle)
+	styleList.put(varProp, varStyle)
 End Sub
 
 'add an attribute
@@ -431,7 +439,7 @@ public Sub getStyle() As String
 Dim sbStyle As StringBuilder
 sbStyle.Initialize
 sbStyle.Append("{")
-For each k As String in styleList.Keys
+For Each k As String In styleList.Keys
 Dim v As String = styleList.Get(k)
 sbStyle.Append(k).Append(":").Append(v).Append(",")
 Next
@@ -442,8 +450,8 @@ End Sub
 
 'sets the attributes
 public Sub setAttributes(varAttributes As String)
-Dim mItems As List = BANanoShared.StrParse(";", varAttributes)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(";", varAttributes)
+For Each mt As String In mxItems
 Dim k As String = BANanoShared.MvField(mt,1,"=")
 Dim v As String = BANanoShared.MvField(mt,2,"=")
 If mElement <> Null Then mElement.SetAttr(k, v)
@@ -453,8 +461,8 @@ End Sub
 
 'sets the styles from the designer
 public Sub setStyles(varStyles As String)
-Dim mItems As List = BANanoShared.StrParse(",", varStyles)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(",", varStyles)
+For Each mt As String In mxItems
 Dim k As String = BANanoShared.MvField(mt,1,":")
 Dim v As String = BANanoShared.MvField(mt,2,":")
 AddStyle(k, v)
@@ -486,13 +494,13 @@ public Sub getText() As String
 Return mText
 End Sub
 
-public Sub setViews(varViews As String)
-AddAttr(":views", varViews)
-mViews = varViews
+public Sub setItems(varItems As String)
+AddAttr(":items", varItems)
+mItems = varItems
 End Sub
 
-public Sub getViews() As String
-Return mViews
+public Sub getItems() As String
+Return mItems
 End Sub
 
 public Sub setKey(varKey As String)
@@ -513,6 +521,15 @@ public Sub getParentId() As String
 Return mParentId
 End Sub
 
+public Sub setPerPage(varPerPage As String)
+AddAttr("per-page", varPerPage)
+mPerPage = varPerPage
+End Sub
+
+public Sub getPerPage() As String
+Return mPerPage
+End Sub
+
 public Sub setRef(varRef As String)
 AddAttr("ref", varRef)
 mRef = varRef
@@ -520,6 +537,15 @@ End Sub
 
 public Sub getRef() As String
 Return mRef
+End Sub
+
+public Sub setSlot(varSlot As String)
+AddAttr("slot", varSlot)
+mSlot = varSlot
+End Sub
+
+public Sub getSlot() As String
+Return mSlot
 End Sub
 
 public Sub setVBindClass(varVBindClass As String)

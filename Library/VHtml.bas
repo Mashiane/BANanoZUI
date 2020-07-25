@@ -10,6 +10,7 @@ Version=8.3
 
 #DesignerProperty: Key: TagName, DisplayName: Tag, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: Text, DisplayName: Text, Description: , FieldType: String, DefaultValue: 
+#DesignerProperty: Key: Slot, DisplayName: Slot, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: Disabled, DisplayName: Disabled, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: Key, DisplayName: Key, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: ParentId, DisplayName: ParentId, Description: , FieldType: String, DefaultValue: 
@@ -18,15 +19,12 @@ Version=8.3
 #DesignerProperty: Key: Required, DisplayName: Required, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VBindClass, DisplayName: VBindClass, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VBindStyle, DisplayName: VBindStyle, Description: , FieldType: String, DefaultValue: 
-#DesignerProperty: Key: VCloak, DisplayName: VCloak, Description: , FieldType: Boolean, DefaultValue: False
 #DesignerProperty: Key: VElse, DisplayName: VElse, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VElseIf, DisplayName: VElseIf, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VFor, DisplayName: VFor, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VHtml, DisplayName: VHtml, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VIf, DisplayName: VIf, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VModel, DisplayName: VModel, Description: , FieldType: String, DefaultValue: 
-#DesignerProperty: Key: VOnce, DisplayName: VOnce, Description: , FieldType: Boolean, DefaultValue: False
-#DesignerProperty: Key: VPre, DisplayName: VPre, Description: , FieldType: Boolean, DefaultValue: False
 #DesignerProperty: Key: VShow, DisplayName: VShow, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VText, DisplayName: VText, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: BorderColor, DisplayName: BorderColor, Description: Set border-color, FieldType: String, DefaultValue: , List: amber|black|blue|blue-grey|brown|cyan|deep-orange|deep-purple|green|grey|indigo|light-blue|light-green|lime|orange|pink|purple|red|teal|transparent|white|yellow|primary|secondary|accent|error|info|success|warning|none
@@ -62,7 +60,7 @@ Private classList As Map
 Private mClasses As String = "" 
 	Private mStyle As String = "" 
 	Private mAttributes As String = ""
-
+	Private mSlot As String = ""
 Private mTagName As String = "div" 
 	Public bindings As Map 
 	Public methods As Map
@@ -75,15 +73,12 @@ Private sRef As String = ""
 Private sRequired As String = ""
 Private sVBindClass As String = ""
 Private sVBindStyle As String = ""
-Private bVCloak As Boolean = False
 Private sVElse As String = ""
 Private sVElseIf As String = ""
 Private sVFor As String = ""
 Private sVHtml As String = ""
 Private sVIf As String = ""
 Private sVModel As String = ""
-Private bVOnce As Boolean = False
-Private bVPre As Boolean = False
 Private sVShow As String = ""
 Private sVText As String = ""
 Private sBorderColor As String = ""
@@ -98,6 +93,7 @@ Private sPaddingTop As String = ""
 Private sPaddingRight As String = ""
 Private sPaddingBottom As String = ""
 Private sPaddingLeft As String = ""
+Private sbText As StringBuilder
 
 End Sub
 
@@ -110,6 +106,7 @@ methods.Initialize
 properties.Initialize 
 styles.Initialize 
 classList.Initialize 
+sbText.Initialize
 'bindClass.Initialize  
 'bindStyle.Initialize
 'bindings.Put($"${mName}style"$, bindStyle)
@@ -137,15 +134,12 @@ sRef = props.Get("Ref")
 sRequired = props.Get("Required")
 sVBindClass = props.Get("VBindClass")
 sVBindStyle = props.Get("VBindStyle")
-bVCloak = props.Get("VCloak")
 sVElse = props.Get("VElse")
 sVElseIf = props.Get("VElseIf")
 sVFor = props.Get("VFor")
 sVHtml = props.Get("VHtml")
 sVIf = props.Get("VIf")
 sVModel = props.Get("VModel")
-bVOnce = props.Get("VOnce")
-bVPre = props.Get("VPre")
 sVShow = props.Get("VShow")
 sVText = props.Get("VText")
 sBorderColor = props.Get("BorderColor")
@@ -160,7 +154,7 @@ sPaddingTop = props.Get("PaddingTop")
 sPaddingRight = props.Get("PaddingRight")
 sPaddingBottom = props.Get("PaddingBottom")
 sPaddingLeft = props.Get("PaddingLeft")
-
+		mSlot = props.Get("Slot")
 End If
 Dim strHTML As String = ToString
 mElement = mTarget.Append(strHTML).Get("#" & mName)
@@ -176,6 +170,27 @@ Sub SetDisabled(varDisabled As String) As VHTML
 sDisabled = varDisabled
 SetAttr("disabled", sDisabled)
 Return Me
+End Sub
+
+Sub SetDiv As VHTML
+	SetTagName("div")
+	Return Me
+End Sub
+
+Sub SetSection As VHTML
+	SetTagName("section")
+	Return Me
+End Sub
+
+Sub SetSlotExtension As VHTML
+	SetAttr("slot", "extension")
+	Return Me
+End Sub
+
+
+Sub SetSlotMedia As VHTML
+	SetAttr("slot", "media")
+	Return Me
 End Sub
 
 'set key
@@ -227,13 +242,6 @@ SetAttr("v-bind:style", sVBindStyle)
 Return Me
 End Sub
 
-'set v-cloak
-Sub SetVCloak(varVCloak As Boolean) As VHTML
-bVCloak = varVCloak
-SetAttr("v-cloak", bVCloak)
-Return Me
-End Sub
-
 'set v-else
 Sub SetVElse(varVElse As String) As VHTML
 sVElse = varVElse
@@ -273,20 +281,6 @@ End Sub
 Sub SetVModel(varVModel As String) As VHTML
 sVModel = varVModel
 SetAttr("v-model", sVModel)
-Return Me
-End Sub
-
-'set v-once
-Sub SetVOnce(varVOnce As Boolean) As VHTML
-bVOnce = varVOnce
-SetAttr("v-once", bVOnce)
-Return Me
-End Sub
-
-'set v-pre
-Sub SetVPre(varVPre As Boolean) As VHTML
-bVPre = varVPre
-SetAttr("v-pre", bVPre)
 Return Me
 End Sub
 
@@ -398,6 +392,7 @@ End Sub
 
 'return the generated html
 Sub ToString As String
+	AddAttr(mSlot, "slot")
 AddAttr(sDisabled, "disabled")
 AddAttr(sKey, "key")
 AddAttr(sParentId, "parent-id")
@@ -406,15 +401,12 @@ AddAttr(sRef, "ref")
 AddAttr(sRequired, "required")
 AddAttr(sVBindClass, "v-bind:class")
 AddAttr(sVBindStyle, "v-bind:style")
-AddAttr(bVCloak, "v-cloak")
 AddAttr(sVElse, "v-else")
 AddAttr(sVElseIf, "v-else-if")
 AddAttr(sVFor, "v-for")
 AddAttr(sVHtml, "v-html")
 AddAttr(sVIf, "v-if")
 AddAttr(sVModel, "v-model")
-AddAttr(bVOnce, "v-once")
-AddAttr(bVPre, "v-pre")
 AddAttr(sVShow, "v-show")
 AddAttr(sVText, "v-text")
 SetStyleSingle("border-color", sBorderColor)

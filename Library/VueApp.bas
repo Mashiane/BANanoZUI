@@ -7,6 +7,7 @@ Version=8.3
 #IgnoreWarnings:12
 Sub Class_Globals
 	Public zircle As BANanoObject
+	Public zui As ZircleUI
 	Public el As BANanoObject
 	Public emit As BANanoObject
 	Public router As BANanoObject
@@ -93,16 +94,31 @@ Sub Class_Globals
 	Public const ICONPOS_LEFT As String = "left"
 	Public const ICONPOS_RIGHT As String = "right"
 	'
-	Private sourceID As String
-	Private targetID As String
+	'Private sourceID As String
+	'Private targetID As String
 	Public store As BANanoObject
 	Public state As Map
+	Public ZUICanvas As ZUIZcanvas
+	Private body As BANanoElement
 End Sub
 
 'initialize the app with where to render and where to .GetHTML
-Public Sub Initialize(Module As Object, elTo As String, elSource As String) As VueApp
-	sourceID = elSource
-	targetID = elTo
+Public Sub Initialize(Module As Object) As VueApp
+	'get the body of the page
+	body = BANano.GetElement("#body")
+	'empy it
+	body.Empty
+	'add the app div
+	body.Append($"<div id="app"></div>"$)
+	
+	VAP.Initialize("Vue")
+	zircle.Initialize("zircle")
+	Use(zircle)
+	'***use a global prototype
+	state.Initialize
+		
+	'sourceID = elSource
+	'targetID = "#app"
 	Modules.Initialize
 	methods.Initialize
 	computed.Initialize
@@ -118,11 +134,6 @@ Public Sub Initialize(Module As Object, elTo As String, elSource As String) As V
 	Themes.Initialize 
 	ColorMap.Initialize
 	'
-	VAP.Initialize("Vue")
-	zircle.Initialize("zircle")
-	Use(zircle)
-	'***use a global prototype
-	state.Initialize 
 	'
 	SetBeforeCreate(Module, "BeforeCreate")
 	SetCreated(Module, "Created")
@@ -134,6 +145,20 @@ Public Sub Initialize(Module As Object, elTo As String, elSource As String) As V
 	SetDestroyed(Module, "Destroyed")
 	
 	InitColors
+	'
+	'add the canvas to the page
+	ZUICanvas.Initialize(Module, "canvas", "canvas")
+	ZUICanvas.Views = "$options.components"
+	ZUICanvas.AddToParent("app")
+	
+	'add the placeholder div to the app
+	Dim placeholder As VHTML
+	placeholder.Initialize(Module, "placeholder", "placeholder")
+	placeholder.SetTagName("div")
+	placeholder.SetVShow("placeholder")
+	placeholder.AddToParent("app")
+	placeholder.AddToApp(Me)
+	
 	Return Me
 End Sub
 
@@ -460,6 +485,19 @@ Sub AddComponentBO(compName As String, comp As BANanoObject) As VueApp
 	components.Put(compName, comp)
 	Return Me
 End Sub
+
+Sub NewList As List
+	Dim elx As List
+	elx.Initialize
+	Return elx
+End Sub
+
+Sub NewMap As Map
+	Dim nm As Map
+	nm.Initialize
+	Return nm
+End Sub
+
 
 'add a router
 Sub AddRoute(comp As VMElement)
@@ -916,19 +954,21 @@ Sub Serve
 	store = VAP.RunMethod("observable", Array(state))
 	VAP.GetField("prototype").SetField("$store", store)
 	'
-	sourceID = sourceID.Replace("#","")
-	targetID = targetID.Replace("#","")
+	ZUICanvas.AddToApp(Me)
+	
+	'sourceID = sourceID.Replace("#","")
+	'targetID = targetID.Replace("#","")
 	'set where we should render the app to
-	Options.Put("el", $"#${targetID}"$)
+	Options.Put("el", "#app")
 	Options.Put("store", store)
 	'get the body
 	'get where you have loaded the layout
 	'this gets the HTML to use
-	Dim source As BANanoElement
+	'Dim source As BANanoElement
 	'get the element
-	source.Initialize($"#${sourceID}"$)
+	body.Initialize("#body")
 	'get the template HTML
-	Template = source.GetHTML
+	Template = body.GetHTML
 	SetTemplate(Template)
 	'
 	If routes.Size > 0 Then
@@ -962,6 +1002,24 @@ Sub Serve
 	store = VAP.GetField(sstore)
 	Dim szircle As String = "$zircle"
 	zircle = VAP.GetField(szircle)
+	'
+	'initialize zui
+	zui.Initialize(zircle)
+End Sub
+
+'set a view
+Sub ZuiSetView(sView As String)
+	zui.SetView(sView)
+End Sub
+
+'to a view
+Sub ZuiToView(sview As String)
+	zui.ToView(sview)
+End Sub
+
+'get params
+Sub ZuiGetParams(prop As String) As BANanoObject
+	Return zui.GetParams(prop)
 End Sub
 
 'Use router To navigate
@@ -1120,4 +1178,54 @@ Sub SetOnClick(Module As Object, methodName As String)
 	Dim cb As BANanoObject = BANano.CallBack(Module, methodName, Array(e))
 	'add to methods
 	SetCallBack(methodName, cb)
+End Sub
+
+Sub AddHTMLElement(Module As Object, parentID As String, elID As String, tag As String, props As Map, styleProps As Map, classNames As List, loose As List, Text As String)
+	parentID = parentID.ToLowerCase
+	elID = elID.tolowercase
+	parentID = parentID.Replace("#","")
+	elID = elID.Replace("#","")
+	'
+	Dim elIT As VHTML
+	elIT.Initialize(Module, elID, elID)
+	elIT.SetText(Text)
+	elIT.SetTagName(tag)
+	'
+	If loose <> Null Then
+		For Each k As String In loose
+			elIT.SetAttr(k, True)
+		Next
+	End If
+	If props <> Null Then
+		For Each k As String In props.Keys
+			Dim v As String = props.Get(k)
+			elIT.SetAttr(k, v)
+		Next
+	End If
+	If styleProps <> Null Then
+		For Each k As String In styleProps.Keys
+			Dim v As String = styleProps.get(k)
+			elIT.SetAttr(k, v)
+		Next
+	End If
+	If classNames <> Null Then
+		elIT.AddClass(classNames)
+	End If
+	'add to the parent element
+	Dim sElement As String = elIT.tostring
+	BANano.GetElement($"#${parentID}"$).Append(sElement)
+End Sub
+
+'create a slide
+Sub ZuiCreateSlide(Module As Object, slideName As String, templateName As String) As VMElement
+	templateName = templateName.ToLowerCase
+	templateName = templateName.Replace("#","")
+	slideName = slideName.tolowercase
+	'create a component
+	Dim slide As VMElement
+	slide.Initialize(Module, slideName, slideName)
+	'set the contents from the home layout
+	slide.SetBANanoTemplate($"#${templateName}"$)
+	'return the component	
+	Return slide
 End Sub

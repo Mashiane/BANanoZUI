@@ -7,15 +7,31 @@ Version=7
 #IgnoreWarnings:12
 'Custom BANano View class
 
+#Event: clicknative (event As BANanoEvent)
 
 #DesignerProperty: Key: Text, DisplayName: Text, FieldType: String, DefaultValue: , Description: Text on the element
+#DesignerProperty: Key: Label, DisplayName: Label, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Index, DisplayName: Index, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: SlotScope, DisplayName: SlotScope, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: ToView, DisplayName: ToView, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: VOnClickNative, DisplayName: VOnClickNative, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Angle, DisplayName: Angle, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Button, DisplayName: Button, FieldType: Boolean, DefaultValue: False , Description: 
+#DesignerProperty: Key: Distance, DisplayName: Distance, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: ImagePath, DisplayName: ImagePath, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Knob, DisplayName: Knob, FieldType: Boolean, DefaultValue: False , Description: 
+#DesignerProperty: Key: Progress, DisplayName: Progress, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: QtySync, DisplayName: QtySync, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Ref, DisplayName: Ref, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Size, DisplayName: Size, FieldType: String, DefaultValue:  , Description: , List: xxl|xl|large|medium|small|xs|xxs
+#DesignerProperty: Key: Slider, DisplayName: Slider, FieldType: Boolean, DefaultValue: False , Description: 
 #DesignerProperty: Key: Classes, DisplayName: Classes, FieldType: String, DefaultValue: , Description: Classes added to the HTML tag.
 #DesignerProperty: Key: Style, DisplayName: Style, FieldType: String, DefaultValue: , Description: Styles added to the HTML tag. Must be a json String.
 #DesignerProperty: Key: Attributes, DisplayName: Attributes, FieldType: String, DefaultValue: , Description: Attributes added to the HTML tag. Must be a json String.
-#DesignerProperty: Key: Views, DisplayName: Views, FieldType: String, DefaultValue: $options.components , Description: 
 #DesignerProperty: Key: Key, DisplayName: Key, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: ParentId, DisplayName: ParentId, FieldType: String, DefaultValue:  , Description: 
-#DesignerProperty: Key: Ref, DisplayName: Ref, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Slot, DisplayName: Slot, FieldType: String, DefaultValue:  , Description: , List: default|extension|media|none
+#DesignerProperty: Key: VBindSync, DisplayName: VBindSync, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VBindClass, DisplayName: VBindClass, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VBindStyle, DisplayName: VBindStyle, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VElse, DisplayName: VElse, FieldType: String, DefaultValue:  , Description: 
@@ -62,14 +78,28 @@ Private mText As String = ""
 Private classList As Map
 Private styleList As Map
 Private attributeList As Map
-Private mTagName As String = "z-canvas"
+Private mTagName As String = "z-spot"
 Private sbText As StringBuilder
 Public bindings As Map
 Public methods As Map
-Private mViews As String = "$options.components"
+Private mAngle As String = "0"
+Private mButton As Boolean = False
+Private mDistance As String = "100"
+Private mImagePath As String = ""
+Private mIndex As String = ""
 Private mKey As String = ""
+Private mKnob As Boolean = False
+Private mLabel As String = ""
 Private mParentId As String = ""
+Private mProgress As String = "0"
+Private mQtySync As String = "0"
 Private mRef As String = ""
+Private mSize As String = "medium"
+Private mSlider As Boolean = False
+Private mSlot As String = ""
+Private mSlotScope As String = ""
+Private mToView As String = ""
+Private mVBindSync As String = ""
 Private mVBindClass As String = ""
 Private mVBindStyle As String = ""
 Private mVElse As String = ""
@@ -78,6 +108,7 @@ Private mVFor As String = ""
 Private mVHtml As String = ""
 Private mVIf As String = ""
 Private mVModel As String = ""
+Private mVOnClickNative As String = ""
 Private mVShow As String = ""
 Private mVText As String = ""
 Private mBackgroundColor As String = ""
@@ -124,10 +155,24 @@ mClasses = Props.Get("Classes")
 mAttributes = Props.Get("Attributes")
 mStyle = Props.Get("Style")
 mText = Props.Get("Text")
-mViews = Props.Get("Views")
+mAngle = Props.Get("Angle")
+mButton = Props.Get("Button")
+mDistance = Props.Get("Distance")
+mImagePath = Props.Get("ImagePath")
+mIndex = Props.Get("Index")
 mKey = Props.Get("Key")
+mKnob = Props.Get("Knob")
+mLabel = Props.Get("Label")
 mParentId = Props.Get("ParentId")
+mProgress = Props.Get("Progress")
+mQtySync = Props.Get("QtySync")
 mRef = Props.Get("Ref")
+mSize = Props.Get("Size")
+mSlider = Props.Get("Slider")
+mSlot = Props.Get("Slot")
+mSlotScope = Props.Get("SlotScope")
+mToView = Props.Get("ToView")
+mVBindSync = Props.Get("VBindSync")
 mVBindClass = Props.Get("VBindClass")
 mVBindStyle = Props.Get("VBindStyle")
 mVElse = Props.Get("VElse")
@@ -136,6 +181,7 @@ mVFor = Props.Get("VFor")
 mVHtml = Props.Get("VHtml")
 mVIf = Props.Get("VIf")
 mVModel = Props.Get("VModel")
+mVOnClickNative = Props.Get("VOnClickNative")
 mVShow = Props.Get("VShow")
 mVText = Props.Get("VText")
 mBackgroundColor = Props.Get("BackgroundColor")
@@ -161,10 +207,24 @@ mTextDecoration = Props.Get("TextDecoration")
 mWidth = Props.Get("Width")
 End If
 
-AddAttr(":views", mViews)
+AddAttr("angle", mAngle)
+AddAttr("button", mButton)
+AddAttr("distance", mDistance)
+AddAttr("image-path", mImagePath)
+AddAttr("index", mIndex)
 AddAttr("key", mKey)
+AddAttr("knob", mKnob)
+AddAttr("label", mLabel)
 AddAttr("parent-id", mParentId)
+AddAttr("progress", mProgress)
+AddAttr(":qty.sync", mQtySync)
 AddAttr("ref", mRef)
+AddAttr("size", mSize)
+AddAttr("slider", mSlider)
+AddAttr("slot", mSlot)
+AddAttr("slot-scope", mSlotScope)
+AddAttr("to-view", mToView)
+AddAttr("v-bind.sync", mVBindSync)
 AddAttr("v-bind:class", mVBindClass)
 AddAttr("v-bind:style", mVBindStyle)
 AddAttr("v-else", mVElse)
@@ -173,6 +233,7 @@ AddAttr("v-for", mVFor)
 AddAttr("v-html", mVHtml)
 AddAttr("v-if", mVIf)
 AddAttr("v-model", mVModel)
+AddAttr("v-on:click.native", mVOnClickNative)
 AddAttr("v-show", mVShow)
 AddAttr("v-text", mVText)
 AddStyle("background-color", mBackgroundColor)
@@ -204,6 +265,7 @@ setStyles(mStyle)
 Dim strHTML As String = ToString
 mElement = mTarget.Append(strHTML).Get("#" & mName)
 'add events for the custom view, if any
+mElement.HandleEvents("click.native", mCallBack, mEventName & "_click.native")
 
 End Sub
 
@@ -335,25 +397,25 @@ public Sub AddClass(varClass As String)
 If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
-If varClass = "" Then Return
+if varClass = "" Then Return
 If mElement <> Null Then mElement.AddClass(varClass)
-Dim mItems As List = BANanoShared.StrParse(" ", varClass)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
+For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
 End Sub
 
 'add a class on condition
-public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As Boolean)
+public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As boolean)
 If BANano.IsUndefined(varCondition) Or BANano.IsNull(varCondition) Then Return
-If varShouldBe <> varCondition Then Return
+if varShouldBe <> varCondition Then Return
 If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
 If varClass = "" Then Return
 If mElement <> Null Then mElement.AddClass(varClass)
-Dim mItems As List = BANanoShared.StrParse(" ", varClass)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
+For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
 End Sub
@@ -368,7 +430,7 @@ aStyle.put(varProp, varStyle)
 Dim sStyle As String = BANano.ToJSON(aStyle)
 mElement.SetStyle(sStyle)
 End If
-styleList.put(varProp, varStyle)
+	styleList.put(varProp, varStyle)
 End Sub
 
 'add an attribute
@@ -396,8 +458,8 @@ public Sub AddAttr(varProp As String, varValue As String)
 			If mElement <> Null Then mElement.SetAttr(varProp, varValue)
 			attributeList.put(varProp, varValue)
 			Select Case varProp
-			Case "v-model", "v-show", "v-if", "required", "disabled", "readonly"
-				bindings.Put(varValue, Null)
+				Case "v-model", "v-show", "v-if", "required", "disabled", "readonly"
+					bindings.Put(varValue, Null)
 			End Select
 		End If
 	End If
@@ -442,8 +504,8 @@ End Sub
 
 'sets the attributes
 public Sub setAttributes(varAttributes As String)
-Dim mItems As List = BANanoShared.StrParse(";", varAttributes)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(";", varAttributes)
+For Each mt As String In mxItems
 Dim k As String = BANanoShared.MvField(mt,1,"=")
 Dim v As String = BANanoShared.MvField(mt,2,"=")
 If mElement <> Null Then mElement.SetAttr(k, v)
@@ -453,8 +515,8 @@ End Sub
 
 'sets the styles from the designer
 public Sub setStyles(varStyles As String)
-Dim mItems As List = BANanoShared.StrParse(",", varStyles)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(",", varStyles)
+For Each mt As String In mxItems
 Dim k As String = BANanoShared.MvField(mt,1,":")
 Dim v As String = BANanoShared.MvField(mt,2,":")
 AddStyle(k, v)
@@ -465,7 +527,7 @@ End Sub
 public Sub getAttributes() As String
 Dim sbAttr As StringBuilder
 sbAttr.Initialize
-For Each k As String In attributeList.Keys
+For each k As String in attributeList.Keys
 Dim v As String = attributeList.Get(k)
 sbAttr.Append(k).Append("=").Append(v).Append(";")
 Next
@@ -486,13 +548,49 @@ public Sub getText() As String
 Return mText
 End Sub
 
-public Sub setViews(varViews As String)
-AddAttr(":views", varViews)
-mViews = varViews
+public Sub setAngle(varAngle As String)
+AddAttr("angle", varAngle)
+mAngle = varAngle
 End Sub
 
-public Sub getViews() As String
-Return mViews
+public Sub getAngle() As String
+Return mAngle
+End Sub
+
+public Sub setButton(varButton As Boolean)
+AddAttr("button", varButton)
+mButton = varButton
+End Sub
+
+public Sub getButton() As Boolean
+Return mButton
+End Sub
+
+public Sub setDistance(varDistance As String)
+AddAttr("distance", varDistance)
+mDistance = varDistance
+End Sub
+
+public Sub getDistance() As String
+Return mDistance
+End Sub
+
+public Sub setImagePath(varImagePath As String)
+AddAttr("image-path", varImagePath)
+mImagePath = varImagePath
+End Sub
+
+public Sub getImagePath() As String
+Return mImagePath
+End Sub
+
+public Sub setIndex(varIndex As String)
+AddAttr("index", varIndex)
+mIndex = varIndex
+End Sub
+
+public Sub getIndex() As String
+Return mIndex
 End Sub
 
 public Sub setKey(varKey As String)
@@ -504,6 +602,24 @@ public Sub getKey() As String
 Return mKey
 End Sub
 
+public Sub setKnob(varKnob As Boolean)
+AddAttr("knob", varKnob)
+mKnob = varKnob
+End Sub
+
+public Sub getKnob() As Boolean
+Return mKnob
+End Sub
+
+public Sub setLabel(varLabel As String)
+AddAttr("label", varLabel)
+mLabel = varLabel
+End Sub
+
+public Sub getLabel() As String
+Return mLabel
+End Sub
+
 public Sub setParentId(varParentId As String)
 AddAttr("parent-id", varParentId)
 mParentId = varParentId
@@ -513,6 +629,24 @@ public Sub getParentId() As String
 Return mParentId
 End Sub
 
+public Sub setProgress(varProgress As String)
+AddAttr("progress", varProgress)
+mProgress = varProgress
+End Sub
+
+public Sub getProgress() As String
+Return mProgress
+End Sub
+
+public Sub setQtySync(varQtySync As String)
+AddAttr("qty.sync", varQtySync)
+mQtySync = varQtySync
+End Sub
+
+public Sub getQtySync() As String
+Return mQtySync
+End Sub
+
 public Sub setRef(varRef As String)
 AddAttr("ref", varRef)
 mRef = varRef
@@ -520,6 +654,60 @@ End Sub
 
 public Sub getRef() As String
 Return mRef
+End Sub
+
+public Sub setSize(varSize As String)
+AddAttr("size", varSize)
+mSize = varSize
+End Sub
+
+public Sub getSize() As String
+Return mSize
+End Sub
+
+public Sub setSlider(varSlider As Boolean)
+AddAttr("slider", varSlider)
+mSlider = varSlider
+End Sub
+
+public Sub getSlider() As Boolean
+Return mSlider
+End Sub
+
+public Sub setSlot(varSlot As String)
+AddAttr("slot", varSlot)
+mSlot = varSlot
+End Sub
+
+public Sub getSlot() As String
+Return mSlot
+End Sub
+
+public Sub setSlotScope(varSlotScope As String)
+AddAttr("slot-scope", varSlotScope)
+mSlotScope = varSlotScope
+End Sub
+
+public Sub getSlotScope() As String
+Return mSlotScope
+End Sub
+
+public Sub setToView(varToView As String)
+AddAttr("to-view", varToView)
+mToView = varToView
+End Sub
+
+public Sub getToView() As String
+Return mToView
+End Sub
+
+public Sub setVBindSync(varVBindSync As String)
+AddAttr("v-bind.sync", varVBindSync)
+mVBindSync = varVBindSync
+End Sub
+
+public Sub getVBindSync() As String
+Return mVBindSync
 End Sub
 
 public Sub setVBindClass(varVBindClass As String)
@@ -592,6 +780,15 @@ End Sub
 
 public Sub getVModel() As String
 Return mVModel
+End Sub
+
+public Sub setVOnClickNative(varVOnClickNative As String)
+AddAttr("v-on:click.native", varVOnClickNative)
+mVOnClickNative = varVOnClickNative
+End Sub
+
+public Sub getVOnClickNative() As String
+Return mVOnClickNative
 End Sub
 
 public Sub setVShow(varVShow As String)

@@ -21,15 +21,12 @@ Version=8.3
 #DesignerProperty: Key: Title, DisplayName: Title, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VBindClass, DisplayName: VBindClass, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VBindStyle, DisplayName: VBindStyle, Description: , FieldType: String, DefaultValue: 
-#DesignerProperty: Key: VCloak, DisplayName: VCloak, Description: , FieldType: Boolean, DefaultValue: False
 #DesignerProperty: Key: VElse, DisplayName: VElse, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VElseIf, DisplayName: VElseIf, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VFor, DisplayName: VFor, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VHtml, DisplayName: VHtml, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VIf, DisplayName: VIf, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VModel, DisplayName: VModel, Description: , FieldType: String, DefaultValue: 
-#DesignerProperty: Key: VOnce, DisplayName: VOnce, Description: , FieldType: Boolean, DefaultValue: False
-#DesignerProperty: Key: VPre, DisplayName: VPre, Description: , FieldType: Boolean, DefaultValue: False
 #DesignerProperty: Key: VShow, DisplayName: VShow, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: VText, DisplayName: VText, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: BorderColor, DisplayName: BorderColor, Description: Set border-color, FieldType: String, DefaultValue: , List: amber|black|blue|blue-grey|brown|cyan|deep-orange|deep-purple|green|grey|indigo|light-blue|light-green|lime|orange|pink|purple|red|teal|transparent|white|yellow|primary|secondary|accent|error|info|success|warning|none
@@ -83,15 +80,12 @@ Private sTarget As String = ""
 Private sTitle As String = ""
 Private sVBindClass As String = ""
 Private sVBindStyle As String = ""
-Private bVCloak As Boolean = False
 Private sVElse As String = ""
 Private sVElseIf As String = ""
 Private sVFor As String = ""
 Private sVHtml As String = ""
 Private sVIf As String = ""
 Private sVModel As String = ""
-Private bVOnce As Boolean = False
-Private bVPre As Boolean = False
 Private sVShow As String = ""
 Private sVText As String = ""
 Private sBorderColor As String = ""
@@ -149,15 +143,12 @@ sTarget = props.Get("Target")
 sTitle = props.Get("Title")
 sVBindClass = props.Get("VBindClass")
 sVBindStyle = props.Get("VBindStyle")
-bVCloak = props.Get("VCloak")
 sVElse = props.Get("VElse")
 sVElseIf = props.Get("VElseIf")
 sVFor = props.Get("VFor")
 sVHtml = props.Get("VHtml")
 sVIf = props.Get("VIf")
 sVModel = props.Get("VModel")
-bVOnce = props.Get("VOnce")
-bVPre = props.Get("VPre")
 sVShow = props.Get("VShow")
 sVText = props.Get("VText")
 sBorderColor = props.Get("BorderColor")
@@ -274,13 +265,6 @@ SetAttr("v-bind:style", sVBindStyle)
 Return Me
 End Sub
 
-'set v-cloak
-Sub SetVCloak(varVCloak As Boolean) As VA
-bVCloak = varVCloak
-SetAttr("v-cloak", bVCloak)
-Return Me
-End Sub
-
 'set v-else
 Sub SetVElse(varVElse As String) As VA
 sVElse = varVElse
@@ -320,20 +304,6 @@ End Sub
 Sub SetVModel(varVModel As String) As VA
 sVModel = varVModel
 SetAttr("v-model", sVModel)
-Return Me
-End Sub
-
-'set v-once
-Sub SetVOnce(varVOnce As Boolean) As VA
-bVOnce = varVOnce
-SetAttr("v-once", bVOnce)
-Return Me
-End Sub
-
-'set v-pre
-Sub SetVPre(varVPre As Boolean) As VA
-bVPre = varVPre
-SetAttr("v-pre", bVPre)
 Return Me
 End Sub
 
@@ -453,15 +423,12 @@ AddAttr(sTarget, "target")
 AddAttr(sTitle, "title")
 AddAttr(sVBindClass, "v-bind:class")
 AddAttr(sVBindStyle, "v-bind:style")
-AddAttr(bVCloak, "v-cloak")
 AddAttr(sVElse, "v-else")
 AddAttr(sVElseIf, "v-else-if")
 AddAttr(sVFor, "v-for")
 AddAttr(sVHtml, "v-html")
 AddAttr(sVIf, "v-if")
 AddAttr(sVModel, "v-model")
-AddAttr(bVOnce, "v-once")
-AddAttr(bVPre, "v-pre")
 AddAttr(sVShow, "v-show")
 AddAttr(sVText, "v-text")
 SetStyleSingle("border-color", sBorderColor)

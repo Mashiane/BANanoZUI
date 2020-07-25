@@ -101,6 +101,11 @@ Library1=jcore
 Library2=jfx
 Library3=banano
 Module1=|absolute|C:\Users\anelembanga\Documents\MEGA\MyApps\b4j\Shared\BANanoShared
+Module10=ZUIZcanvas
+Module11=ZUIZdialog
+Module12=ZUIZlist
+Module13=ZUIZspot
+Module14=ZUIZview
 Module2=VA
 Module3=VApp
 Module4=VHTML
@@ -108,10 +113,10 @@ Module5=VMElement
 Module6=VRouterLink
 Module7=VRouterView
 Module8=VueApp
-Module9=ZUIZcanvas
+Module9=ZircleUI
 NumberOfFiles=48
 NumberOfLibraries=3
-NumberOfModules=9
+NumberOfModules=14
 Version=8.5
 @EndOfDesignText@
 #Region Project Attributes 

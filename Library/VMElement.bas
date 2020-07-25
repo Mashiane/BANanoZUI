@@ -64,7 +64,7 @@ Sub Class_Globals
 	Public refs As BANanoObject
 	Private mprops As Map
 	Private query As Map
-	Private template As String = ""
+	Public Template As String = ""
 	Private mAttributes As String = ""
 	
 	Private mClasses As String = ""
@@ -583,7 +583,7 @@ Sub Component(bRoute As Boolean) As Map
 	opt.Put("watch", watches)
 	opt.Put("props", mprops)
 	opt.Put("filters", filters)
-	opt.Put("template", template)
+	opt.Put("template", Template)
 	opt.Put("components", components)
 	Return opt
 End Sub
@@ -591,7 +591,7 @@ End Sub
 
 'set template for the component before calling Component
 Sub SetTemplate(tmp As String)
-	template = tmp
+	Template = tmp
 End Sub
 
 'set as layout
@@ -599,7 +599,7 @@ Sub SetBANanoTemplate(id As String)
 	id = id.tolowercase
 	Dim be As BANanoElement
 	be.Initialize(id)
-	template = be.GetHTML
+	Template = be.GetHTML
 	be.Empty
 End Sub
 

@@ -13,10 +13,9 @@ Library3=banano
 Library4=bananozui
 Module1=pgIndex
 Module2=pgZircle
-Module3=ZircleUI
 NumberOfFiles=3
 NumberOfLibraries=4
-NumberOfModules=3
+NumberOfModules=2
 Version=8.5
 @EndOfDesignText@
 #Region Project Attributes 

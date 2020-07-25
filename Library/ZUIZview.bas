@@ -12,10 +12,15 @@ Version=7
 #DesignerProperty: Key: Classes, DisplayName: Classes, FieldType: String, DefaultValue: , Description: Classes added to the HTML tag.
 #DesignerProperty: Key: Style, DisplayName: Style, FieldType: String, DefaultValue: , Description: Styles added to the HTML tag. Must be a json String.
 #DesignerProperty: Key: Attributes, DisplayName: Attributes, FieldType: String, DefaultValue: , Description: Attributes added to the HTML tag. Must be a json String.
-#DesignerProperty: Key: Views, DisplayName: Views, FieldType: String, DefaultValue: $options.components , Description: 
+#DesignerProperty: Key: ImagePath, DisplayName: ImagePath, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: Key, DisplayName: Key, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Label, DisplayName: Label, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: LabelPos, DisplayName: LabelPos, FieldType: String, DefaultValue: bottom , Description: , List: top|left|bottom|right
 #DesignerProperty: Key: ParentId, DisplayName: ParentId, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Progress, DisplayName: Progress, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: Ref, DisplayName: Ref, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Size, DisplayName: Size, FieldType: String, DefaultValue: xxl , Description: , List: xxl|xl|large|medium|small|xs|xxs
+#DesignerProperty: Key: Slider, DisplayName: Slider, FieldType: Boolean, DefaultValue: False , Description: 
 #DesignerProperty: Key: VBindClass, DisplayName: VBindClass, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VBindStyle, DisplayName: VBindStyle, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VElse, DisplayName: VElse, FieldType: String, DefaultValue:  , Description: 
@@ -62,14 +67,19 @@ Private mText As String = ""
 Private classList As Map
 Private styleList As Map
 Private attributeList As Map
-Private mTagName As String = "z-canvas"
+Private mTagName As String = "z-view"
 Private sbText As StringBuilder
 Public bindings As Map
 Public methods As Map
-Private mViews As String = "$options.components"
+Private mImagePath As String = ""
 Private mKey As String = ""
+Private mLabel As String = ""
+Private mLabelPos As String = "bottom"
 Private mParentId As String = ""
+Private mProgress As String = "0"
 Private mRef As String = ""
+Private mSize As String = "xxl"
+Private mSlider As Boolean = False
 Private mVBindClass As String = ""
 Private mVBindStyle As String = ""
 Private mVElse As String = ""
@@ -124,10 +134,15 @@ mClasses = Props.Get("Classes")
 mAttributes = Props.Get("Attributes")
 mStyle = Props.Get("Style")
 mText = Props.Get("Text")
-mViews = Props.Get("Views")
+mImagePath = Props.Get("ImagePath")
 mKey = Props.Get("Key")
+mLabel = Props.Get("Label")
+mLabelPos = Props.Get("LabelPos")
 mParentId = Props.Get("ParentId")
+mProgress = Props.Get("Progress")
 mRef = Props.Get("Ref")
+mSize = Props.Get("Size")
+mSlider = Props.Get("Slider")
 mVBindClass = Props.Get("VBindClass")
 mVBindStyle = Props.Get("VBindStyle")
 mVElse = Props.Get("VElse")
@@ -161,10 +176,15 @@ mTextDecoration = Props.Get("TextDecoration")
 mWidth = Props.Get("Width")
 End If
 
-AddAttr(":views", mViews)
+AddAttr("image-path", mImagePath)
 AddAttr("key", mKey)
+AddAttr("label", mLabel)
+AddAttr("label-pos", mLabelPos)
 AddAttr("parent-id", mParentId)
+AddAttr("progress", mProgress)
 AddAttr("ref", mRef)
+AddAttr("size", mSize)
+AddAttr("slider", mSlider)
 AddAttr("v-bind:class", mVBindClass)
 AddAttr("v-bind:style", mVBindStyle)
 AddAttr("v-else", mVElse)
@@ -335,25 +355,25 @@ public Sub AddClass(varClass As String)
 If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
-If varClass = "" Then Return
+if varClass = "" Then Return
 If mElement <> Null Then mElement.AddClass(varClass)
-Dim mItems As List = BANanoShared.StrParse(" ", varClass)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
+For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
 End Sub
 
 'add a class on condition
-public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As Boolean)
+public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As boolean)
 If BANano.IsUndefined(varCondition) Or BANano.IsNull(varCondition) Then Return
-If varShouldBe <> varCondition Then Return
+if varShouldBe <> varCondition Then Return
 If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
 If varClass = "" Then Return
 If mElement <> Null Then mElement.AddClass(varClass)
-Dim mItems As List = BANanoShared.StrParse(" ", varClass)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
+For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
 End Sub
@@ -368,7 +388,7 @@ aStyle.put(varProp, varStyle)
 Dim sStyle As String = BANano.ToJSON(aStyle)
 mElement.SetStyle(sStyle)
 End If
-styleList.put(varProp, varStyle)
+	styleList.put(varProp, varStyle)
 End Sub
 
 'add an attribute
@@ -396,8 +416,8 @@ public Sub AddAttr(varProp As String, varValue As String)
 			If mElement <> Null Then mElement.SetAttr(varProp, varValue)
 			attributeList.put(varProp, varValue)
 			Select Case varProp
-			Case "v-model", "v-show", "v-if", "required", "disabled", "readonly"
-				bindings.Put(varValue, Null)
+				Case "v-model", "v-show", "v-if", "required", "disabled", "readonly"
+					bindings.Put(varValue, Null)
 			End Select
 		End If
 	End If
@@ -407,7 +427,7 @@ End Sub
 Public Sub getClasses() As String
 Dim sbClass As StringBuilder
 sbClass.Initialize
-For Each k As String In classList.Keys
+For each k As String in classList.Keys
 sbClass.Append(k).Append(" ")
 Next
 mClasses = sbClass.ToString
@@ -442,8 +462,8 @@ End Sub
 
 'sets the attributes
 public Sub setAttributes(varAttributes As String)
-Dim mItems As List = BANanoShared.StrParse(";", varAttributes)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(";", varAttributes)
+For Each mt As String In mxItems
 Dim k As String = BANanoShared.MvField(mt,1,"=")
 Dim v As String = BANanoShared.MvField(mt,2,"=")
 If mElement <> Null Then mElement.SetAttr(k, v)
@@ -453,8 +473,8 @@ End Sub
 
 'sets the styles from the designer
 public Sub setStyles(varStyles As String)
-Dim mItems As List = BANanoShared.StrParse(",", varStyles)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(",", varStyles)
+For Each mt As String In mxItems
 Dim k As String = BANanoShared.MvField(mt,1,":")
 Dim v As String = BANanoShared.MvField(mt,2,":")
 AddStyle(k, v)
@@ -465,7 +485,7 @@ End Sub
 public Sub getAttributes() As String
 Dim sbAttr As StringBuilder
 sbAttr.Initialize
-For Each k As String In attributeList.Keys
+For each k As String in attributeList.Keys
 Dim v As String = attributeList.Get(k)
 sbAttr.Append(k).Append("=").Append(v).Append(";")
 Next
@@ -486,13 +506,13 @@ public Sub getText() As String
 Return mText
 End Sub
 
-public Sub setViews(varViews As String)
-AddAttr(":views", varViews)
-mViews = varViews
+public Sub setImagePath(varImagePath As String)
+AddAttr("image-path", varImagePath)
+mImagePath = varImagePath
 End Sub
 
-public Sub getViews() As String
-Return mViews
+public Sub getImagePath() As String
+Return mImagePath
 End Sub
 
 public Sub setKey(varKey As String)
@@ -504,6 +524,24 @@ public Sub getKey() As String
 Return mKey
 End Sub
 
+public Sub setLabel(varLabel As String)
+AddAttr("label", varLabel)
+mLabel = varLabel
+End Sub
+
+public Sub getLabel() As String
+Return mLabel
+End Sub
+
+public Sub setLabelPos(varLabelPos As String)
+AddAttr("label-pos", varLabelPos)
+mLabelPos = varLabelPos
+End Sub
+
+public Sub getLabelPos() As String
+Return mLabelPos
+End Sub
+
 public Sub setParentId(varParentId As String)
 AddAttr("parent-id", varParentId)
 mParentId = varParentId
@@ -513,6 +551,15 @@ public Sub getParentId() As String
 Return mParentId
 End Sub
 
+public Sub setProgress(varProgress As String)
+AddAttr("progress", varProgress)
+mProgress = varProgress
+End Sub
+
+public Sub getProgress() As String
+Return mProgress
+End Sub
+
 public Sub setRef(varRef As String)
 AddAttr("ref", varRef)
 mRef = varRef
@@ -520,6 +567,24 @@ End Sub
 
 public Sub getRef() As String
 Return mRef
+End Sub
+
+public Sub setSize(varSize As String)
+AddAttr("size", varSize)
+mSize = varSize
+End Sub
+
+public Sub getSize() As String
+Return mSize
+End Sub
+
+public Sub setSlider(varSlider As Boolean)
+AddAttr("slider", varSlider)
+mSlider = varSlider
+End Sub
+
+public Sub getSlider() As Boolean
+Return mSlider
 End Sub
 
 public Sub setVBindClass(varVBindClass As String)
