@@ -41,11 +41,27 @@ Sub Class_Globals
 	Public const POS_LEFT As String = "left"
 	Public const POS_BOTTOM As String = "bottom"
 	Public const POS_RIGHT As String = "right"
+	Public const MODE_FULL As String = "full"
+	Public const MODE_MIXED As String = "mixed"
+	Private config As Map
 End Sub
 
 Public Sub Initialize(zui As BANanoObject) As ZircleUI
 	z = zui
 	ZUI_Style.Initialize
+	config.Initialize 
+	Return Me
+End Sub
+
+'use in full screen mode
+Sub SetFullMode As ZircleUI
+	config.Put("mode", MODE_FULL)
+	Return Me
+End Sub
+
+'use inside another app
+Sub SetMixedMode As ZircleUI
+	config.Put("mode", MODE_FULL)
 	Return Me
 End Sub
 
@@ -88,7 +104,6 @@ Sub SetMode(smode As String) As ZircleUI
 End Sub
 
 Sub Refresh
-	Dim config As Map = CreateMap()
 	config.Put("style", ZUI_Style)
 	z.RunMethod("config", config)
 End Sub
@@ -139,50 +154,17 @@ Sub AddList(Module As Object, parentID As String, vID As String, vSlot As String
 End Sub
 
 'add a spot to a view
-Sub AddSpot(Module As Object, parentID As String, vID As String, vLabel As String, vSize As String, vDistance As String, vAngle As String, vToView As String, vSlider As Boolean, vProgress As Int, vImagePath As String, vSlot As String,  Text As String) As ZUIZspot
-	'
-	parentID = parentID.tolowercase
+Sub CreateSpot(Module As Object, vID As String, vLabel As String, vLabelPos As String, vSize As String, vDistance As String, vAngle As String, vToView As String, Text As String) As ZUIZspot
 	vID = vID.tolowercase
-	'
-	parentID = parentID.Replace("#","")
-	vID = vID.Replace("#","")
-	
 	Dim zv As ZUIZspot
 	zv.Initialize(Module, vID, vID)
 	zv.Label = vLabel
+	zv.LabelPos = vLabelPos
 	zv.Size = vSize
-	zv.Slider = vSlider
-	zv.Progress = vProgress
-	If vImagePath <> "" Then zv.ImagePath = vImagePath
-	If vSlot <> "" Then zv.Slot = vSlot
-	zv.Distance = vDistance
-	zv.Angle = vAngle
+	If vDistance <> "" Then zv.Distance = vDistance
+	If vAngle <> "" Then  zv.Angle = vAngle
 	zv.ToView = vToView
 	zv.SetText(Text)
-	'
-	zv.AddToParent(parentID)
-	'
-	Return zv
-End Sub
-
-
-
-'create a view for a component
-Sub CreateView(Module As Object, vID As String, vLabel As String, vSize As String, vLabelPos As String, vSlider As Boolean, vProgress As Int, vImagePath As String, vSlot As String, Text As String) As ZUIZview
-	vID = vID.tolowercase
-	vID = vID.Replace("#","")
-	
-	Dim zv As ZUIZview
-	zv.Initialize(Module, vID, vID)
-	zv.Label = vLabel
-	zv.Size = vSize
-	If vLabelPos <> "" Then zv.LabelPos = vLabelPos
-	zv.Slider = vSlider
-	zv.Progress = vProgress
-	If vSlot <> "" Then zv.Slot = vSlot
-	If vImagePath <> "" Then zv.ImagePath = vImagePath
-	zv.SetText(Text)
-	'
 	Return zv
 End Sub
 

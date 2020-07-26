@@ -480,6 +480,7 @@ End Sub
 
 'add a component we have defined internally
 Sub AddComponent(comp As VMElement) As VueApp
+	'set the tab
 	comp.SetTag(comp.mName)
 	Dim sid As String = comp.mName
 	If components.ContainsKey(sid) = True Then 
@@ -488,6 +489,21 @@ Sub AddComponent(comp As VMElement) As VueApp
 	components.Put(sid, comp.Component(False))
 	Return Me
 End Sub
+
+'add a component we have defined internally
+Sub AddComponentZUI(comp As VMElement) As VueApp
+	'inject template from placeholder
+	comp.TemplateFromPlaceholder
+	'set the tab
+	comp.SetTag(comp.mName)
+	Dim sid As String = comp.mName
+	If components.ContainsKey(sid) = True Then 
+		Return Me
+	End If
+	components.Put(sid, comp.Component(False))
+	Return Me
+End Sub
+
 
 'add a component from 3rd party
 Sub AddComponentBO(compName As String, comp As BANanoObject) As VueApp

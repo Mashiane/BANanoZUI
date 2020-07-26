@@ -10,7 +10,8 @@ Version=7
 #Event: clicknative (event As BANanoEvent)
 
 #DesignerProperty: Key: Text, DisplayName: Text, FieldType: String, DefaultValue: , Description: Text on the element
-#DesignerProperty: Key: Label, DisplayName: Label, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Label, DisplayName: Label, FieldType: String, DefaultValue:  , Description:
+#DesignerProperty: Key: LabelPos, DisplayName: LabelPos, FieldType: String, DefaultValue: bottom , Description: , List: top|left|bottom|right 
 #DesignerProperty: Key: Index, DisplayName: Index, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: SlotScope, DisplayName: SlotScope, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: ToView, DisplayName: ToView, FieldType: String, DefaultValue:  , Description: 
@@ -80,6 +81,7 @@ Private mTarget As BANanoElement 'ignore
 Private mElement As BANanoElement 'ignore
 Private mClasses As String = ""
 Private mStyle As String = ""
+Private mLabelPos As String = ""
 Private mAttributes As String = ""
 Private mText As String = ""
 Private classList As Map
@@ -150,7 +152,7 @@ Private mWidth As String = ""
 End Sub
 
 'initialize the custom view
-Public Sub Initialize (CallBack As Object, Name As String, EventName As String)
+Public Sub Initialize (CallBack As Object, Name As String, EventName As String) As ZUIZspot
 mName = Name.ToLowerCase
 mEventName = EventName.ToLowerCase
 mCallBack = CallBack
@@ -161,6 +163,7 @@ sbText.Initialize
 bindings.Initialize
 methods.Initialize
 mValues.Initialize 
+Return Me
 End Sub
 
 'Create view in the designer
@@ -181,6 +184,7 @@ mKnob = Props.Get("Knob")
 mLabel = Props.Get("Label")
 mParentId = Props.Get("ParentId")
 mProgress = Props.Get("Progress")
+mLabelPos = Props.Get("LabelPos")
 mQtySync = Props.Get("QtySync")
 mRef = Props.Get("Ref")
 mSize = Props.Get("Size")
@@ -238,6 +242,7 @@ AddAttr("index", mIndex)
 AddAttr("key", mKey)
 AddAttr("knob", mKnob)
 AddAttr("label", mLabel)
+AddAttr("label-pos", mLabelPos)
 AddAttr("parent-id", mParentId)
 AddAttr("progress", mProgress)
 AddAttr(":qty.sync", mQtySync)
@@ -314,16 +319,17 @@ Return rslt
 End Sub
 
 'bind an attribute
-Sub SetVBind(prop As String, value As String)
+Sub SetVBind(prop As String, value As String) As ZUIZspot
 prop = prop.ToLowerCase
 value = value.ToLowerCase
 prop = $"v-bind:${prop}"$
 AddAttr(prop,value)
 bindings.Put(value, Null)
+Return Me
 End Sub
 
 'add component to app, this binds events and states
-Sub AddToApp(vap As VueApp)
+Sub AddToApp(vap As VueApp) As ZUIZspot
 'apply the binding for the control
 For Each k As String In bindings.Keys
 Dim v As String = bindings.Get(k)
@@ -334,10 +340,11 @@ For Each k As String In methods.Keys
 Dim cb As BANanoObject = methods.Get(k)
 vap.SetCallBack(k, cb)
 Next
+Return Me
 End Sub
 
 'add component to another, this binds events and states
-Sub AddToComponent(ve As VMElement)
+Sub AddToComponent(ve As VMElement) As ZUIZspot
 'apply the binding for the control
 For Each k As String In bindings.Keys
 Dim v As String = bindings.Get(k)
@@ -348,26 +355,51 @@ For Each k As String In methods.Keys
 Dim cb As BANanoObject = methods.Get(k)
 ve.SetCallBack(k, cb)
 Next
+Return Me
 End Sub
 
+Sub AddText(t As String) As ZUIZspot
+	sbText.Append(t)
+	Return Me
+End Sub
+
+
 'add a break
-Sub AddBR
+Sub AddBR As ZUIZspot
 sbText.Append("<br>")
+Return Me
 End Sub
 
 'add a horizontal rule
-Sub AddHR
+Sub AddHR As ZUIZspot
 sbText.Append("<hr>")
+Return Me
+End Sub
+
+
+public Sub setLabelPos(varLabelPos As String)
+	AddAttr("label-pos", varLabelPos)
+	mLabelPos = varLabelPos
+End Sub
+
+public Sub getLabelPos() As String
+	Return mLabelPos
 End Sub
 
 'set the slot to an extension
-Sub SlotExtension
+Sub SlotExtension As ZUIZspot
 	setSlot("extension")
+	Return Me
 End Sub
 
 'add spot to view
 Sub AddToView(vName As ZUIZview)
 	AddToParent(vName.ID)
+End Sub
+
+'add spot to view slot
+Sub AddToViewSlot(vName As ZUIZview)
+	AddToParent($"${vName.id}slot"$)
 End Sub
 
 'add spot to list
@@ -376,8 +408,27 @@ Sub AddToList(vName As ZUIZlist)
 End Sub
 
 
+'add an icon
+Sub AddIcon(iColor As String, iName As String) As ZUIZspot
+	'add a slot extension
+	Dim iprop As Map = CreateMap()
+	iprop.Put("color", iColor)
+	AddElement($"${mName}icon"$, "i", Null, iprop, Array(iName), Null, "")
+	Return Me
+End Sub
+
+'add an span
+Sub AddSpan(iColor As String, spanText As String) As ZUIZspot
+	'add a slot extension
+	Dim iprop As Map = CreateMap()
+	iprop.Put("color", iColor)
+	AddElement("", "span", Null, iprop, Null, Null, spanText)
+	Return Me
+End Sub
+
+
 'add an element to the text
-Sub AddElement(elID As String, tag As String, props As Map, styleProps As Map, classNames As List, loose As List, Text As String)
+Sub AddElement(elID As String, tag As String, props As Map, styleProps As Map, classNames As List, loose As List, Text As String) As ZUIZspot
 elID = elID.tolowercase
 elID = elID.Replace("#","")
 Dim elIT As VHTML
@@ -407,6 +458,7 @@ End If
 'convert to string
 Dim sElement As String = elIT.tostring
 sbText.Append(sElement)
+Return Me
 End Sub
 
 'returns the BANanoElement
@@ -439,36 +491,38 @@ End If
 End Sub
 
 'add a class
-public Sub AddClass(varClass As String)
-If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
+public Sub AddClass(varClass As String) As ZUIZspot
+If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return Me
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
-If varClass = "" Then Return
+If varClass = "" Then Return Me
 If mElement <> Null Then mElement.AddClass(varClass)
 Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
 For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
+Return Me
 End Sub
 
 'add a class on condition
-public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As Boolean)
-If BANano.IsUndefined(varCondition) Or BANano.IsNull(varCondition) Then Return
-If varShouldBe <> varCondition Then Return
-If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
+public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As Boolean) As ZUIZspot
+If BANano.IsUndefined(varCondition) Or BANano.IsNull(varCondition) Then Return Me
+If varShouldBe <> varCondition Then Return Me
+If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return Me
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
-If varClass = "" Then Return
+If varClass = "" Then Return Me
 If mElement <> Null Then mElement.AddClass(varClass)
 Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
 For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
+Return Me
 End Sub
 
 'add a style
-public Sub AddStyle(varProp As String, varStyle As String)
-If BANano.IsUndefined(varStyle) Or BANano.IsNull(varStyle) Then Return
+public Sub AddStyle(varProp As String, varStyle As String) As ZUIZspot
+If BANano.IsUndefined(varStyle) Or BANano.IsNull(varStyle) Then Return Me
 If BANano.IsNumber(varStyle) Then varStyle = BANanoShared.CStr(varStyle)
 If mElement <> Null Then
 Dim aStyle As Map = CreateMap()
@@ -477,11 +531,12 @@ Dim sStyle As String = BANano.ToJSON(aStyle)
 mElement.SetStyle(sStyle)
 End If
 	styleList.put(varProp, varStyle)
+	Return Me
 End Sub
 
 'add an attribute
-public Sub AddAttr(varProp As String, varValue As String)
-	If BANano.IsUndefined(varValue) Or BANano.IsNull(varValue) Then Return
+public Sub AddAttr(varProp As String, varValue As String) As ZUIZspot
+	If BANano.IsUndefined(varValue) Or BANano.IsNull(varValue) Then Return Me
 	If BANano.IsNumber(varValue) Then varValue = BANanoShared.CStr(varValue)
 	'we are adding a boolean
 	If BANano.IsBoolean(varValue) Then
@@ -511,6 +566,7 @@ public Sub AddAttr(varProp As String, varValue As String)
 			End Select
 		End If
 	End If
+	Return Me
 End Sub
 
 'returns the class names

@@ -130,7 +130,7 @@ Private mWidth As String = ""
 End Sub
 
 'initialize the custom view
-Public Sub Initialize (CallBack As Object, Name As String, EventName As String)
+Public Sub Initialize (CallBack As Object, Name As String, EventName As String) As ZUIZview
 mName = Name.ToLowerCase
 mEventName = EventName.ToLowerCase
 mCallBack = CallBack
@@ -140,6 +140,7 @@ attributeList.Initialize
 sbText.Initialize
 bindings.Initialize
 methods.Initialize
+Return Me
 End Sub
 
 'Create view in the designer
@@ -274,16 +275,17 @@ Return rslt
 End Sub
 
 'bind an attribute
-Sub SetVBind(prop As String, value As String)
+Sub SetVBind(prop As String, value As String) As ZUIZview
 prop = prop.ToLowerCase
 value = value.ToLowerCase
 prop = $"v-bind:${prop}"$
 AddAttr(prop,value)
 bindings.Put(value, Null)
+Return Me
 End Sub
 
 'add component to app, this binds events and states
-Sub AddToApp(vap As VueApp)
+Sub AddToApp(vap As VueApp) As ZUIZview
 'apply the binding for the control
 For Each k As String In bindings.Keys
 Dim v As String = bindings.Get(k)
@@ -294,10 +296,11 @@ For Each k As String In methods.Keys
 Dim cb As BANanoObject = methods.Get(k)
 vap.SetCallBack(k, cb)
 Next
+Return Me
 End Sub
 
 'add component to another, this binds events and states
-Sub AddToComponent(ve As VMElement)
+Sub AddToComponent(ve As VMElement) As ZUIZview
 'apply the binding for the control
 For Each k As String In bindings.Keys
 Dim v As String = bindings.Get(k)
@@ -308,20 +311,36 @@ For Each k As String In methods.Keys
 Dim cb As BANanoObject = methods.Get(k)
 ve.SetCallBack(k, cb)
 Next
+Return Me
 End Sub
 
 'add a break
-Sub AddBR
+Sub AddBR As ZUIZview
 sbText.Append("<br>")
+Return Me
 End Sub
 
+Sub AddText(t As String) As ZUIZview
+	sbText.Append(t)
+	Return Me
+End Sub
+
+
 'add a horizontal rule
-Sub AddHR
+Sub AddHR As ZUIZview
 sbText.Append("<hr>")
+Return Me
+End Sub
+
+'add a div slot extension
+Sub AddDivSlotExtension As ZUIZview
+	'add a slot extension
+	AddElement($"${mName}slot"$, "div", CreateMap("slot": "extension"), Null, Null, Null, "")
+	Return Me
 End Sub
 
 'add an element to the text
-Sub AddElement(elID As String, tag As String, props As Map, styleProps As Map, classNames As List, loose As List, Text As String)
+Sub AddElement(elID As String, tag As String, props As Map, styleProps As Map, classNames As List, loose As List, Text As String) As ZUIZview
 elID = elID.tolowercase
 elID = elID.Replace("#","")
 Dim elIT As VHTML
@@ -351,6 +370,7 @@ End If
 'convert to string
 Dim sElement As String = elIT.tostring
 sbText.Append(sElement)
+Return Me
 End Sub
 
 'returns the BANanoElement
@@ -383,36 +403,38 @@ End If
 End Sub
 
 'add a class
-public Sub AddClass(varClass As String)
-If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
+public Sub AddClass(varClass As String) As ZUIZview
+If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return Me
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
-If varClass = "" Then Return
+If varClass = "" Then Return Me
 If mElement <> Null Then mElement.AddClass(varClass)
 Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
 For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
+Return Me
 End Sub
 
 'add a class on condition
-public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As Boolean)
-If BANano.IsUndefined(varCondition) Or BANano.IsNull(varCondition) Then Return
-If varShouldBe <> varCondition Then Return
-If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
+public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As Boolean) As ZUIZview
+If BANano.IsUndefined(varCondition) Or BANano.IsNull(varCondition) Then Return Me
+If varShouldBe <> varCondition Then Return Me
+If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return Me
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
-If varClass = "" Then Return
+If varClass = "" Then Return Me
 If mElement <> Null Then mElement.AddClass(varClass)
 Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
 For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
+Return Me
 End Sub
 
 'add a style
-public Sub AddStyle(varProp As String, varStyle As String)
-If BANano.IsUndefined(varStyle) Or BANano.IsNull(varStyle) Then Return
+public Sub AddStyle(varProp As String, varStyle As String) As ZUIZview
+If BANano.IsUndefined(varStyle) Or BANano.IsNull(varStyle) Then Return Me
 If BANano.IsNumber(varStyle) Then varStyle = BANanoShared.CStr(varStyle)
 If mElement <> Null Then
 Dim aStyle As Map = CreateMap()
@@ -421,11 +443,12 @@ Dim sStyle As String = BANano.ToJSON(aStyle)
 mElement.SetStyle(sStyle)
 End If
 	styleList.put(varProp, varStyle)
+	Return Me
 End Sub
 
 'add an attribute
-public Sub AddAttr(varProp As String, varValue As String)
-	If BANano.IsUndefined(varValue) Or BANano.IsNull(varValue) Then Return
+public Sub AddAttr(varProp As String, varValue As String) As ZUIZview
+	If BANano.IsUndefined(varValue) Or BANano.IsNull(varValue) Then Return Me
 	If BANano.IsNumber(varValue) Then varValue = BANanoShared.CStr(varValue)
 	'we are adding a boolean
 	If BANano.IsBoolean(varValue) Then
@@ -453,6 +476,7 @@ public Sub AddAttr(varProp As String, varValue As String)
 			End Select
 		End If
 	End If
+	Return Me
 End Sub
 
 'returns the class names
@@ -977,5 +1001,4 @@ Sub SetCoverImage(url As String)
 	img.Width = "100%"
 	img.Height = "100%"
 	sbText.Append(img.ToString)
-	'AddToParent(mName)
 End Sub
