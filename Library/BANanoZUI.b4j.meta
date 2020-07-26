@@ -46,6 +46,6 @@ ModuleClosedNodes6=
 ModuleClosedNodes7=
 ModuleClosedNodes8=
 ModuleClosedNodes9=
-NavigationStack=ZUIZview,setParentId,608,0,ZUIZview,getLabelPos,603,0,ZUIZview,getProgress,621,0,ZUIZview,getParentId,610,0,ZircleUI,Class_Globals,20,0,ZircleUI,CreateSpot,164,6,ZircleUI,AddList,115,0,ZircleUI,Refresh,103,0,ZircleUI,AddView,113,0,ZircleUI,CreateComponent,169,0
+NavigationStack=VueApp,Class_Globals,3,0,VueApp,Initialize,112,0,VueApp,Serve,1030,0,VueApp,SetComputed,800,0,VueApp,SetMethod,832,0,VueApp,SetWatch,811,0,VueApp,GetData,748,0,VueApp,getglobalstate,741,0,Main,Process_Globals,19,0,VueApp,SetData,720,0,ZircleUI,SetMode,94,0
 SelectedBuild=0
 VisibleModules=

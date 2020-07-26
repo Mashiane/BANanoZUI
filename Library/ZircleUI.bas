@@ -108,6 +108,18 @@ Sub Refresh
 	z.RunMethod("config", config)
 End Sub
 
+'get the active theme
+Sub GetTheme As String
+	Dim res As String = z.RunMethod("getTheme", Null).Result
+	Return res
+End Sub
+
+'get theme mode
+Sub GetThemeMode As String
+	Dim res As String = z.RunMethod("getThemeMode", Null).Result
+	Return res
+End Sub
+
 'add a view to the canvas
 Sub AddView(Module As Object, vID As String, vLabel As String, vSize As String, vLabelPos As String, vSlider As Boolean, vProgress As Int, vImagePath As String, vSlot As String, Text As String) As ZUIZview
 	'

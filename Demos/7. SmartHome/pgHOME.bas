@@ -26,14 +26,14 @@ Sub Initialize
 	zview.Initialize(Me, "homeview", "homeview")
 	zview.AddText("11:53 PM").AddBR
 	zview.AddText("Monday, Oct.").AddBR.AddBR
-	zview.AddElement("", "h1", Null, Null, Null, Null, "Night mode").AddBR
+	zview.AddElement("", "h2", Null, Null, Null, Null, "Night mode").AddBR
 	zview.AddText("Outside 29˚C, sunny").AddBR
 	zview.AddText("Inside 25˚C")
 	'add a slot extension, we will out slots here
 	zview.AddDivSlotExtension  ' the name will be 'homeviewslot'
 	zview.AddToPlaceholder
-	'build component from placeholder and
-	'add spot to open the status slide
+'	'build component from placeholder and
+'	'add spot to open the status slide
 	Dim status As ZUIZspot
 	status.Initialize(Me, "status", "status")
 	status.BackgroundColor = sh.COLOR_ORANGE
@@ -55,7 +55,7 @@ Sub Initialize
 	family.Size = zui.SIZE_S
 	family.Distance = 120
 	family.Label = "Family"
-	family.labelpos = zui.POS_RIGHT 
+	family.labelpos = zui.POS_RIGHT
 	family.ToView = "family"
 	family.AddIcon("", "fa fa-map-marker-alt")
 	family.AddToViewSlot(zview)
@@ -83,13 +83,13 @@ Sub Initialize
 	rooms.toview = "rooms"
 	rooms.Text = "5"
 	rooms.AddToViewSlot(zview)
-	'
+'	'
 	'add spot to open devices
 	Dim devices As ZUIZspot
 	devices.Initialize(Me, "devices", "devices")
 	devices.Angle = 60
 	devices.Distance = 120
-	devices.size = zui.SIZE_S 
+	devices.size = zui.SIZE_S
 	devices.label = "Devices"
 	devices.LabelPos = zui.POS_RIGHT
 	devices.toview = "Devices"

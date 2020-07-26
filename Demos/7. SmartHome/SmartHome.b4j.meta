@@ -40,6 +40,6 @@ ModuleClosedNodes6=
 ModuleClosedNodes7=
 ModuleClosedNodes8=
 ModuleClosedNodes9=
-NavigationStack=pgSCENES,Process_Globals,2,0,pgSCENES,Initialize,9,0,pgSEARCH,Process_Globals,2,0,pgSETTINGS,Process_Globals,2,1,pgSTATUS,Process_Globals,2,1,pgSTATUS,Initialize,9,0,pgTV,Process_Globals,4,1,pgSEARCH,Initialize,8,0,pgTV,Initialize,10,0,Main,Process_Globals,6,0,pgLOGS,Initialize,11,0
+NavigationStack=pgDEVICE,Initialize,22,0,pgHOME,Initialize,14,0,pgIndex,Process_Globals,9,0,pgSETTINGS,Process_Globals,2,0,pgIndex,modechanged,72,6,pgIndex,themechanged,62,6,pgSETTINGS,Initialize,56,6,pgSETTINGS,getclassname,95,6,pgSETTINGS,changestyle,87,6,pgIndex,Init,49,6
 SelectedBuild=0
 VisibleModules=
