@@ -1074,3 +1074,12 @@ End Sub
 Sub AddToList(vName As ZUIZlist)
 	AddToParent(vName.ID)
 End Sub
+
+'add spot to view slot
+Sub AddToViewSlot(vName As ZUIZview)
+	AddToParent($"${vName.id}slot"$)
+End Sub
+
+Sub SlotImage
+	AddAttr("slot", "image")
+End Sub

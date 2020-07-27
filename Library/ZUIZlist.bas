@@ -827,4 +827,12 @@ public Sub getWidth() As String
 Return mWidth
 End Sub
 
+'add spot to view
+Sub AddToView(vName As ZUIZview)
+	AddToParent(vName.ID)
+End Sub
 
+'add spot to view slot
+Sub AddToViewSlot(vName As ZUIZview)
+	AddToParent($"${vName.id}slot"$)
+End Sub

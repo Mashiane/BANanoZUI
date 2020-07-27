@@ -12,7 +12,6 @@ Version=8.3
 #DesignerProperty: Key: Download, DisplayName: Download, Description: , FieldType: Boolean, DefaultValue: False
 #DesignerProperty: Key: Href, DisplayName: Href, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: Key, DisplayName: Key, Description: , FieldType: String, DefaultValue: 
-#DesignerProperty: Key: Name, DisplayName: Name, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: ParentId, DisplayName: ParentId, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: Readonly, DisplayName: Readonly, Description: , FieldType: String, DefaultValue: 
 #DesignerProperty: Key: Ref, DisplayName: Ref, Description: , FieldType: String, DefaultValue: 
@@ -71,7 +70,6 @@ Private sDisabled As String = ""
 Private bDownload As Boolean = False
 Private sHref As String = ""
 Private sKey As String = ""
-Private sName As String = ""
 Private sParentId As String = ""
 Private sReadonly As String = ""
 Private sRef As String = ""
@@ -134,7 +132,6 @@ sDisabled = props.Get("Disabled")
 bDownload = props.Get("Download")
 sHref = props.Get("Href")
 sKey = props.Get("Key")
-sName = props.Get("Name")
 sParentId = props.Get("ParentId")
 sReadonly = props.Get("Readonly")
 sRef = props.Get("Ref")
@@ -199,13 +196,6 @@ End Sub
 Sub SetKey(varKey As String) As VA
 sKey = varKey
 SetAttr("key", sKey)
-Return Me
-End Sub
-
-'set name
-Sub SetName(varName As String) As VA
-sName = varName
-SetAttr("name", sName)
 Return Me
 End Sub
 
@@ -414,7 +404,6 @@ AddAttr(sDisabled, "disabled")
 AddAttr(bDownload, "download")
 AddAttr(sHref, "href")
 AddAttr(sKey, "key")
-AddAttr(sName, "name")
 AddAttr(sParentId, "parent-id")
 AddAttr(sReadonly, "readonly")
 AddAttr(sRef, "ref")

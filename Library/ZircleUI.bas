@@ -170,13 +170,13 @@ Sub CreateSpot(Module As Object, vID As String, vLabel As String, vLabelPos As S
 	vID = vID.tolowercase
 	Dim zv As ZUIZspot
 	zv.Initialize(Module, vID, vID)
-	zv.Label = vLabel
-	zv.LabelPos = vLabelPos
-	zv.Size = vSize
+	If vLabel <> "" Then zv.Label = vLabel
+	If vLabelPos <> "" Then zv.LabelPos = vLabelPos
+	If vSize <> "" Then zv.Size = vSize
 	If vDistance <> "" Then zv.Distance = vDistance
 	If vAngle <> "" Then  zv.Angle = vAngle
-	zv.ToView = vToView
-	zv.SetText(Text)
+	If vToView <> "" Then zv.ToView = vToView
+	If Text <> "" Then zv.SetText(Text)
 	Return zv
 End Sub
 

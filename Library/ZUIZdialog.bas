@@ -139,7 +139,7 @@ Dim styleName As String = BANanoShared.BuildStyle(styleList)
 AddAttr("style", styleName)
 'build element internal structure
 Dim iStructure As String = BANanoShared.BuildAttributes(attributeList)
-Dim rslt As String = $"<${mTagName} id="${mName}" ${iStructure}>${mText}</${mTagName}>"$
+Dim rslt As String = $"<${mTagName} id="${mName}" ${iStructure}>${mText}${sbText.tostring}</${mTagName}>"$
 Return rslt
 End Sub
 
@@ -540,7 +540,36 @@ mVText = varVText
 End Sub
 
 public Sub getVText() As String
-Return mVText
+	Return mVText
+End Sub
+
+Sub AddSpot(t As String) As ZUIZdialog
+	sbText.Append(t)
+	Return Me
+End Sub
+
+'add a div slot extension
+Sub AddDivSlotExtension As ZUIZdialog
+	'add a slot extension
+	AddElement($"${mName}slot"$, "div", CreateMap("slot": "extension"), Null, Null, Null, "")
+	Return Me
+End Sub
+
+'add a section slot extension
+Sub AddSectionSlotExtension As ZUIZdialog
+	'add a slot extension
+	AddElement($"${mName}slot"$, "section", CreateMap("slot": "extension"), Null, Null, Null, "")
+	Return Me
+End Sub
+
+'add spot to view
+Sub AddToView(vName As ZUIZview)
+	AddToParent(vName.ID)
+End Sub
+
+'add spot to view slot
+Sub AddToViewSlot(vName As ZUIZview)
+	AddToParent($"${vName.id}slot"$)
 End Sub
 
 

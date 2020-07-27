@@ -24,9 +24,31 @@ Sub Initialize
 	'create the view
 	Dim zview As ZUIZview
 	zview.Initialize(Me, "statusview", "statussview")
-	zview.Text = "Status"
+	zview.Text = "Home Status"
+	zview.BackgroundColor = "black"
+	zview.AddDivSlotExtension
 	zview.AddToPlaceholder
-
+	'
+	'lets add a canvas, normal html element
+	Dim zcanvas As ZUICanvas
+	zcanvas.Initialize(Me, "smoothiechart", "smoothiechart")
+	zcanvas.SlotMedia
+	zcanvas.Height = "50%"
+	zcanvas.Width = "inherit"
+	zcanvas.AddToview(zview)
+	'
+	'add a z spot to point us to logs
+	Dim zlogs As ZUIZspot
+	zlogs.Initialize(Me, "logs", "logs")
+	zlogs.angle = -45
+	zlogs.distance = 120
+	zlogs.label = "Events"
+	zlogs.LabelPos = zui.pos_right
+	zlogs.Size = zui.SIZE_S
+	zlogs.Toview = "logs"
+	zlogs.text = "15"
+	zlogs.AddToViewSlot(zview)
+	
 	'build component from placeholder and
 	'add the component to the app
 	sh.AddComponentZUI(comp)

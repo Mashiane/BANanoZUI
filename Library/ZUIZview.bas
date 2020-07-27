@@ -339,6 +339,22 @@ Sub AddDivSlotExtension As ZUIZview
 	Return Me
 End Sub
 
+Sub AddDivSlotMedia(sHeight As String, sWidth As String) As ZUIZview
+	'add a slot extension
+	Dim xStyle As Map = CreateMap()
+	If sHeight <> "" Then xStyle.Put("height", sHeight)
+	If sWidth <> "" Then xStyle.Put("width", sWidth)
+	AddElement($"${mName}slot"$, "div", CreateMap("slot": "media"), xStyle, Null, Null, "")
+	Return Me
+End Sub
+
+'add a section slot extension
+Sub AddSectionSlotExtension As ZUIZview
+	'add a slot extension
+	AddElement($"${mName}slot"$, "section", CreateMap("slot": "extension"), Null, Null, Null, "")
+	Return Me
+End Sub
+
 'add an element to the text
 Sub AddElement(elID As String, tag As String, props As Map, styleProps As Map, classNames As List, loose As List, Text As String) As ZUIZview
 elID = elID.tolowercase

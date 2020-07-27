@@ -20,18 +20,18 @@ Sub Init
 	MyApp.SetData("theme", "black")
 	MyApp.SetData("mode", "dark")
 	'
-	pgHOME.Initialize
-	pgDEVICE.Initialize  
+	pgHOME.Initialize  'done
+	'pgDEVICE.Initialize  
 	pgDEVICES.Initialize 
 	pgFAMILY.Initialize 
 	pgLIVING.Initialize 
 	pgLOGS.Initialize
-	pgROOMS.Initialize
+	pgROOMS.Initialize  'done
 	pgSCENES.Initialize 
-	pgSEARCH.Initialize 
-	pgSETTINGS.Initialize
+	'pgSEARCH.Initialize  'done
+	pgSETTINGS.Initialize  'done
 	pgSTATUS.Initialize
-	pgTV.Initialize 
+	pgTV.Initialize   'done
 	 
 	'get the canvas and change the background
 	'canvas = MyApp.ZUICanvas
