@@ -30,6 +30,7 @@ Sub Initialize
 	zview.Label = "Leaflet Map"
 	zview.AddAttr("ref", "map")
 	zview.AddDivSlotMedia("100%", "100%")
+	zview.ImagePath = "./assets/famlocation.jpg"
 	zview.AddSectionSlotExtension
 	zview.AddToPlaceholder
 	'
@@ -38,7 +39,7 @@ Sub Initialize
 	mary.AddIcon("", "fas fa-female")
 	'mary.VOnClickNative = "showme(0, 'purple')"
 	mary.AddToViewSlot(zview)
-	'	
+'	'	
 	Dim john As ZUIZspot = zui.CreateSpot(Me, "john", "John", "top", "s", "", "30", "", "")
 	john.Button = True
 	john.AddIcon("", "fas fa-male")

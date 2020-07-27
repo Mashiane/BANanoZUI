@@ -633,11 +633,13 @@ public Sub getParentId() As String
 Return mParentId
 End Sub
 
+'set progress you should set slider to true
 public Sub setProgress(varProgress As String)
 AddAttr("progress", varProgress)
 mProgress = varProgress
 End Sub
 
+'get progress you should set slider to true
 public Sub getProgress() As String
 Return mProgress
 End Sub

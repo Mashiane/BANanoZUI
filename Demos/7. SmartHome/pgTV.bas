@@ -54,6 +54,7 @@ Sub Initialize
 	'
 	Dim volume As ZUIZspot = zui.CreateSpot(Me, "volume", "vol","","m","100","135","","")
 	volume.progress = 14
+	volume.slider = True
 	volume.button = True
 	volume.AddToViewSlot(zview)
 	'

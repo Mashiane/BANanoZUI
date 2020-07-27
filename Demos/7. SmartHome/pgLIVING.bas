@@ -26,11 +26,10 @@ Sub Initialize
 	comp.SetData("devices", sh.NewList)
 	'
 	Dim scenes As List = sh.NewList
-	scenes.add(CreateMap("name": "Relax", "state": "active", "icon": "fas fa-book"))
-	scenes.add(CreateMap("name": "Theatre", "state": "deactive", "icon": "fas fa-film"))
-	scenes.add(CreateMap("name": "Party", "state": "deactive", "icon": "fas fa-birthday-cake"))
+	scenes.add(CreateMap("angle":-50, "name": "Relax", "state": "active", "icon": "fas fa-book"))
+	scenes.add(CreateMap("angle":-30, "name": "Theatre", "state": "deactive", "icon": "fas fa-film"))
+	scenes.add(CreateMap("angle":-10, "name": "Party", "state": "deactive", "icon": "fas fa-birthday-cake"))
 	comp.setdata("scenes", scenes)
-	'
 	
 	'create the view
 	Dim zview As ZUIZview
@@ -39,6 +38,7 @@ Sub Initialize
 	zview.BorderWidth = "8px"
 	zview.Slider = True
 	zview.Progress = ":progress"
+	zview.slider = True
 	zview.AddDivSlotExtension
 	zview.AddToPlaceholder
 	'
@@ -56,17 +56,17 @@ Sub Initialize
 	zspot.vfor = "(scene, index) in scenes"
 	zspot.button = True
 	zspot.size = "s"
-	zspot.AddAttr(":angle", "getangle(scenes,index)")
+	zspot.Angle = ":scene.angle"
 	zspot.distance = 125
 	zspot.label = ":scene.name"
 	zspot.labelpos = "right"
-	'zspot.AddAttr(":key", "'scn_' + index")
-	'zspot.VOnClickNative = "showme(scene.name)"
+	zspot.AddAttr(":key", "'scn_' + index")
+	zspot.VOnClickNative = "showme(scene.name)"
 	zspot.AddIcon("", ":scene.icon")
 	zspot.AddToViewSlot(zview)
 	
 	'
-	comp.SetMethod(Me, "getangle")
+	comp.SetMethod(Me, "showme")
 	
 	'build component from placeholder and
 	'add the component to the app
@@ -74,14 +74,6 @@ Sub Initialize
 
 End Sub
 
-Sub getangle(scenes As List, index As String) As Int
-	Dim llen As Int = scenes.Size - 1
-	Log(llen)
-	Log(index)
-	'llen = llen * index
-	'Dim toadd As Int = 90 / llen
-	'toadd = 225 + toadd
-	'Log(toadd)
-	'Return toadd 
-	'zspot.AddAttr(":angle", "225 + (90 / (scenes.length - 1) * index)")
+Sub showme(scene As String)
+Log(scene)
 End Sub

@@ -34,8 +34,9 @@ Sub Initialize
 	zview.AddToPlaceholder
 '	'build component from placeholder and
 '	'add spot to open the status slide
+'
 	Dim status As ZUIZspot
-	status.Initialize(Me, "status", "status")
+	status.Initialize(Me, "hstatus", "hstatus")
 	status.BackgroundColor = sh.COLOR_ORANGE
 	status.BorderWidth = "4px"
 	status.BorderColor = "var(--background-color)"
@@ -50,7 +51,7 @@ Sub Initialize
 	'
 	'add spot to open up family
 	Dim family As ZUIZspot
-	family.Initialize(Me, "family", "family")
+	family.Initialize(Me, "hfamily", "hfamily")
 	family.angle = -30
 	family.Size = zui.SIZE_S
 	family.Distance = 120
@@ -62,7 +63,7 @@ Sub Initialize
 	'
 	'add spot to open up scenes
 	Dim scenes As ZUIZspot
-	scenes.Initialize(Me, "scenes", "scenes")
+	scenes.Initialize(Me, "hscenes", "hscenes")
 	scenes.Angle = 0
 	scenes.Size = zui.SIZE_S
 	scenes.Distance = 120
@@ -74,7 +75,7 @@ Sub Initialize
 	'
 	'add spot to open rooms
 	Dim rooms As ZUIZspot
-	rooms.Initialize(Me, "rooms", "rooms")
+	rooms.Initialize(Me, "hrooms", "hrooms")
 	rooms.Angle = 30
 	rooms.size = zui.size_s
 	rooms.Distance = 120
@@ -86,7 +87,7 @@ Sub Initialize
 '	'
 	'add spot to open devices
 	Dim devices As ZUIZspot
-	devices.Initialize(Me, "devices", "devices")
+	devices.Initialize(Me, "hdevices", "hdevices")
 	devices.Angle = 60
 	devices.Distance = 120
 	devices.size = zui.SIZE_S
@@ -98,7 +99,7 @@ Sub Initialize
 	'
 	'add spot to go to settings
 	Dim settings As ZUIZspot
-	settings.Initialize(Me, "settings", "settings")
+	settings.Initialize(Me, "hsettings", "hsettings")
 	settings.Angle = 150
 	settings.Distance = 120
 	settings.Size = zui.SIZE_S

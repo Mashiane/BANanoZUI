@@ -26,14 +26,16 @@ Sub Initialize
 	comp.SetData("color", "blue")
 	comp.SetData("msg","")
 	comp.setdata("progress", 0)
+	comp.setdata("styleactive", CreateMap())
 	'
 	Dim elements As List = sh.NewList
-	elements.Add(CreateMap("scene": "Day", "color": "orange", "icon": "fa-sun", "msg": "Cooling rooms, blinds opened, playing ambient music"))
-	elements.Add(CreateMap("scene": "Night", "color": "blue", "icon": "fa-moon", "msg": "Blinds closed, AC in silence mode, motion sensors active"))
-	elements.Add(CreateMap("scene": "Away", "color": "red", "icon": "fa-shield-alt", "msg": "Alarm armed, cameras activated, blinds closed"))
-	elements.Add(CreateMap("scene": "At home", "color": "green", "icon": "fa-home", "msg": "Lights in ambient mode, playing relax music, coffee is being prepared"))
-	comp.setdata("scenes", elements)
-	
+	elements.Add(CreateMap("angle": -50, "scene": "Day", "color": "orange", "icon": "fas fa-sun", "msg": "Cooling rooms, blinds opened, playing ambient music"))
+	elements.Add(CreateMap("angle": -30, "scene": "Night", "color": "blue", "icon": "fas fa-moon", "msg": "Blinds closed, AC in silence mode, motion sensors active"))
+	elements.Add(CreateMap("angle": -10, "scene": "Away", "color": "red", "icon": "fas fa-shield-alt", "msg": "Alarm armed, cameras activated, blinds closed"))
+	elements.Add(CreateMap("angle": 10, "scene": "At home", "color": "green", "icon": "fas fa-home", "msg": "Lights in ambient mode, playing relax music, coffee is being prepared"))
+	comp.setdata("sceneslist", elements)
+	'save the size of the list
+	comp.setdata("scenessize", elements.size)
 	
 	'create the view
 	Dim zview As ZUIZview
@@ -41,29 +43,87 @@ Sub Initialize
 	zview.Label = "Scenes"
 	zview.slider = True
 	zview.Progress = ":progress"
+	zview.Slider = True
+	'bind the style
 	zview.AddAttr(":style", "styleactive")
+	'add a h1
 	zview.AddElement("vh1", "h1", Null, Null, Null, Null, "{{ activescene }}")
+	'add a div
 	zview.AddElement("hd1", "div", Null, CreateMap("height":"60px"),Null, Null, "{{ msg }}")
-	
 	'add slot extension
 	zview.AddDivSlotExtension
 	'add view to placeholder
 	zview.AddToPlaceholder
 
+	'add the items
+	Dim scenespot As ZUIZspot
+	scenespot.initialize(Me, "scenespot", "scenespot")
+	scenespot.VFor = "(el, index) in sceneslist"
+	scenespot.button = True 
+	scenespot.size = "s"
+	scenespot.distance = 120
+	scenespot.Label = ":el.scene"
+	scenespot.LabelPos = zui.POS_RIGHT
+	scenespot.Angle = ":el.angle"
+	'apply scene color
+	scenespot.AddAttr(":style" ,"getspotstyle(el)")
+	scenespot.key = ":el.index"
+	'activate color scene
+	scenespot.VOnClickNative = "showme(el)"
+	scenespot.AddIcon("", ":el.icon")
+	scenespot.AddToViewSlot(zview)
+	
 	'set the computed property, will run the callback
-	comp.SetComputed("styleactive", Me, "getstyleactive")
+	comp.setmethod(Me, "showme")
+	'watch changes to the scene
+	comp.SetWatch(Me, "activescene", True, True, "applystyle")
+	comp.setmethod(Me, "getspotstyle")
+	'
 	'build component from placeholder and
 	'add the component to the app
 	sh.AddComponentZUI(comp)
 
 End Sub
 
-'callback for computed property
-Sub getstyleactive As Map
+Sub showme(el As Map)
+	'get the active scene
+	Dim sactivescene As String = comp.getdata("activescene")
+	'get the element scene
+	Dim elscene As String = el.get("scene")
+	Dim elcolor As String = el.get("color")
+	'apply scene
+	If sactivescene = elscene Then
+		comp.SetData("msg", "This scene is already activated")
+	Else
+		comp.setdata("progress", 5)
+		comp.setdata("activescene", elscene)
+		comp.setdata("color", elcolor)
+		comp.setdata("msg", "Activating devices...")
+		'var vm = this
+	End If	
+End Sub
+
+'callback for watch
+Sub applystyle As Map
 	Dim scolor As String = comp.getdata("color")
 	Dim astyle As Map = CreateMap()
-	astyle.put("borderWidth", "8px")
-	astyle.Put("borderColor", scolor)
+	astyle.put("border-width", "8px")
+	astyle.Put("border-color", scolor)
 	astyle.Put("color", scolor)
+	comp.SetData("styleactive", astyle)
 	Return astyle
+End Sub
+
+Sub getspotstyle(el As Map) As Object
+	'get the active theme
+	Dim sactive As String = comp.getdata("activescene")
+	'get this theme
+	Dim elscene As String = el.get("scene")
+	'
+	If sactive = elscene Then
+		Dim mactive As Map = comp.GetData("styleactive")
+		Return mactive
+	Else
+		Return ""
+	End If
 End Sub

@@ -560,7 +560,7 @@ public Sub AddAttr(varProp As String, varValue As String) As ZUIZspot
 				If mElement <> Null Then mElement.SetAttr(varProp, varValue)
 			Else
 				Dim rname As String = BANanoShared.MidString2(varValue, 2)
-				If rname.Contains(".") = False Then bindings.Put(rname, Null)
+				'If rname.Contains(".") = False Then bindings.Put(rname, Null)
 				attributeList.put($":${varProp}"$, rname)
 				If mElement <> Null Then mElement.SetAttr($":${varProp}"$, varValue)
 			End If
@@ -568,10 +568,10 @@ public Sub AddAttr(varProp As String, varValue As String) As ZUIZspot
 			'does not start with :
 			If mElement <> Null Then mElement.SetAttr(varProp, varValue)
 			attributeList.put(varProp, varValue)
-			Select Case varProp
-				Case "v-model", "v-show", "v-if", "required", "disabled", "readonly"
-					bindings.Put(varValue, Null)
-			End Select
+'			Select Case varProp
+'				Case "v-model", "v-show", "v-if", "required", "disabled", "readonly"
+'					bindings.Put(varValue, Null)
+'			End Select
 		End If
 	End If
 	Return Me
@@ -741,11 +741,13 @@ public Sub getParentId() As String
 Return mParentId
 End Sub
 
+'set progress you should set slider to true
 public Sub setProgress(varProgress As String)
 AddAttr("progress", varProgress)
 mProgress = varProgress
 End Sub
 
+'get progress you should set slider to true
 public Sub getProgress() As String
 Return mProgress
 End Sub
