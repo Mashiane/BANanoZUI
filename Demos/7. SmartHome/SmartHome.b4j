@@ -68,6 +68,8 @@ Sub AppStart (Form1 As Form, Args() As String)
 	BANano.TranspilerOptions.MinifyOnline = False
 	BANano.TranspilerOptions.IgnoreB4JLibrary("BANanoPostProcessor")
 	BANano.TranspilerOptions.ExternalTestConnectionServer = "http://www.localhost"
+	'
+	BANano.Header.AddCSSFile("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700")
 	
 	#if debug
 		BANano.TranspilerOptions.EnableLiveCodeSwapping = True

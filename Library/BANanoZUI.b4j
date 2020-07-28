@@ -120,18 +120,19 @@ Library2=jfx
 Library3=banano
 Module1=|absolute|C:\Users\anelembanga\Documents\MEGA\MyApps\b4j\Shared\BANanoShared
 Module10=ZUICanvas
-Module11=ZUILI
-Module12=ZUIUL
-Module13=ZUIZcanvas
-Module14=ZUIZdialog
-Module15=ZUIZform
-Module16=ZUIZiframe
-Module17=ZUIZimage
-Module18=ZUIZinput
-Module19=ZUIZlist
+Module11=ZUIForm
+Module12=ZUIIframe
+Module13=ZUIImage
+Module14=ZUIInput
+Module15=ZUILI
+Module16=ZUISpan
+Module17=ZUIUL
+Module18=ZUIZcanvas
+Module19=ZUIZdialog
 Module2=VA
-Module20=ZUIZspot
-Module21=ZUIZview
+Module20=ZUIZlist
+Module21=ZUIZspot
+Module22=ZUIZview
 Module3=VApp
 Module4=VHTML
 Module5=VMElement
@@ -141,7 +142,7 @@ Module8=VueApp
 Module9=ZircleUI
 NumberOfFiles=57
 NumberOfLibraries=3
-NumberOfModules=21
+NumberOfModules=22
 Version=8.5
 @EndOfDesignText@
 #Region Project Attributes 
@@ -149,18 +150,13 @@ Version=8.5
 	#MainFormHeight: 600 
 	#IgnoreWarnings: 16, 10, 14, 15, 19
 	#LibraryAuthor: Anele Mbanga (Mashiane)
-	#LibraryVersion: 1.05
+	#LibraryVersion: 1.07
 #End Region
 
-#Region Notes
-	'Drawer, SnackBar - show and hide using vmodel
-	'Dialog - show and hide using vmodel
-	
-#End Region
 
 Sub Process_Globals
 	Private BANano As BANano 'ignore
-	Public Version As String = "1.05"
+	Public Version As String = "1.07"
 	Public AppName As String = "BANanoZUI"
 End Sub
 

@@ -6,7 +6,7 @@ Version=8.5
 @EndOfDesignText@
 #IgnoreWarnings:12
 Sub Class_Globals
-	Private z As BANanoObject
+	Public Z As BANanoObject
 	Private ZUI_Style As Map
 	'
 	Public const SIZE_XXL As String = "xxl"
@@ -75,13 +75,17 @@ Sub ToView(view As String) As ZircleUI
 	Return Me
 End Sub
 
-Sub GetParams(prop As String) As BANanoObject
-	Dim bo As BANanoObject
-	Dim item As BANanoObject
-	'
-	bo = z.RunMethod("getParams", Null)
-	item = bo.GetField(prop)
-	Return item
+Sub GetParams(prop As String) As Object
+	Dim item As Object
+	Try
+		Dim bo As BANanoObject
+		'
+		bo = z.RunMethod("getParams", Null)
+		item = bo.GetField(prop)
+		Return item
+	Catch
+		Return item
+	End Try
 End Sub
 
 'set the theme of the zui

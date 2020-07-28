@@ -229,6 +229,12 @@ Dim rslt As String = $"<${mTagName} id="${mName}" ${iStructure}>${mText}</${mTag
 Return rslt
 End Sub
 
+
+Sub Bind(prop As String, value As String)
+	Dim skey As String = $":${prop}"$
+	AddAttr(skey, value)
+End Sub
+
 'bind an attribute
 Sub SetVBind(prop As String, value As String)
 prop = prop.ToLowerCase

@@ -5,7 +5,7 @@ Type=StaticCode
 Version=8.5
 @EndOfDesignText@
 'Static code module
-#IgnoreWarnings:12
+'#IgnoreWarnings:12
 Sub Process_Globals
 	Private BANano As BANano   'ignore
 	Private sh As VueApp
@@ -27,7 +27,7 @@ Sub Initialize
 	zview.Initialize(Me, "settingsview", "settingsview")
 	'the theme text is bound to a variable
 	zview.AddText("Theme").AddBR
-	zview.AddText("{{ $store.mode }} - {{ $store.theme }}")
+	zview.AddText("{{ $store.theme }} - {{ $store.mode }}")
 	
 	'add the div slot extension
 	zview.AddDivSlotExtension
@@ -63,16 +63,23 @@ Sub Initialize
 	comp.setmethod(Me, "getclassname")
 	'add elements that are needed
 	Dim elements As List = sh.newlist
-	elements.add(CreateMap("type": "theme", "angle": -50, "label": "blue", "labelpos": "right"))
-	elements.add(CreateMap("type": "theme", "angle": -30, "label": "black", "labelpos": "right"))
-	elements.add(CreateMap("type": "theme", "angle": -10, "label": "green", "labelpos": "right"))
-	elements.add(CreateMap("type": "theme", "angle": 10, "label": "red", "labelpos": "right"))
-	elements.add(CreateMap("type": "theme", "angle": 30, "label": "light-blue", "labelpos": "right"))
-	elements.add(CreateMap("type": "theme", "angle": 50, "label": "gray", "labelpos": "right"))
+	elements.add(CreateMap("type": "theme", "angle": -90, "label": "blue", "labelpos": "top"))
+	elements.add(CreateMap("type": "theme", "angle": -70, "label": "black", "labelpos": "right"))
+	elements.add(CreateMap("type": "theme", "angle": -50, "label": "green", "labelpos": "right"))
+	elements.add(CreateMap("type": "theme", "angle": -30, "label": "red", "labelpos": "right"))
+	elements.add(CreateMap("type": "theme", "angle": -10, "label": "light-blue", "labelpos": "right"))
+	elements.add(CreateMap("type": "theme", "angle": 10, "label": "gray", "labelpos": "right"))
+	'additional
+	elements.add(CreateMap("type": "theme", "angle": 30, "label": "white", "labelpos": "right"))
+	elements.add(CreateMap("type": "theme", "angle": 50, "label": "orange", "labelpos": "right"))
+	elements.add(CreateMap("type": "theme", "angle": 70, "label": "yellow", "labelpos": "right"))
+	elements.add(CreateMap("type": "theme", "angle": 90, "label": "purple", "labelpos": "bottom"))
+	
 	elements.add(CreateMap("type": "mode", "angle": 210, "label": "dark", "labelpos": "left"))
 	elements.add(CreateMap("type": "mode", "angle": 190, "label": "dark-filled", "labelpos": "left"))
 	elements.add(CreateMap("type": "mode", "angle": 170, "label": "light", "labelpos": "left"))
 	elements.add(CreateMap("type": "mode", "angle": 150, "label": "light-filled", "labelpos": "left"))
+	
 	'save elements to the state
 	comp.SetData("elements", elements)	
 	'add the component to the app
@@ -81,7 +88,7 @@ Sub Initialize
 End Sub
 
 'define the event
-Sub changestyle(el As Map)
+Sub changestyle(el As Map)   'IgnoreDeadCode
 	'get the type
 	Dim stheme As String = el.get("label")
 	Dim stype As String = el.Get("type")
@@ -99,7 +106,7 @@ End Sub
 	
 
 'define the class getter
-Sub getclassname(el As Map) As String
+Sub getclassname(el As Map) As String   'IgnoreDeadCode
 	'get the type
 	Dim stheme As String = el.get("label")
 	Dim stype As String = el.Get("type")

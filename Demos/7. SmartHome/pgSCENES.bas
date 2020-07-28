@@ -5,11 +5,13 @@ Type=StaticCode
 Version=8.5
 @EndOfDesignText@
 'Static code module
+'#IgnoreWarnings:12
 Sub Process_Globals
 	Private BANano As BANano   'ignore
 	Private sh As VueApp
 	Public zui As ZircleUI
 	Private comp As VMElement
+	Private thisInterval As Object
 End Sub
 
 
@@ -41,11 +43,10 @@ Sub Initialize
 	Dim zview As ZUIZview
 	zview.Initialize(Me, "scenesview", "scenesview")
 	zview.Label = "Scenes"
-	zview.slider = True
 	zview.Progress = ":progress"
 	zview.Slider = True
 	'bind the style
-	zview.AddAttr(":style", "styleactive")
+	zview.Bind("style", "styleactive")
 	'add a h1
 	zview.AddElement("vh1", "h1", Null, Null, Null, Null, "{{ activescene }}")
 	'add a div
@@ -66,7 +67,7 @@ Sub Initialize
 	scenespot.LabelPos = zui.POS_RIGHT
 	scenespot.Angle = ":el.angle"
 	'apply scene color
-	scenespot.AddAttr(":style" ,"getspotstyle(el)")
+	scenespot.Bind("style" ,"getspotstyle(el)")
 	scenespot.key = ":el.index"
 	'activate color scene
 	scenespot.VOnClickNative = "showme(el)"
@@ -85,7 +86,8 @@ Sub Initialize
 
 End Sub
 
-Sub showme(el As Map)
+Sub showme(el As Map)   'IgnoreDeadCode
+	'save the item
 	'get the active scene
 	Dim sactivescene As String = comp.getdata("activescene")
 	'get the element scene
@@ -99,12 +101,36 @@ Sub showme(el As Map)
 		comp.setdata("activescene", elscene)
 		comp.setdata("color", elcolor)
 		comp.setdata("msg", "Activating devices...")
-		'var vm = this
+		'run the interval to update the scene
+		Dim cb As BANanoObject = BANano.CallBackExtra(Me, "runsettings", Null, Array(el))
+		thisInterval = BANano.Window.SetInterval(cb, 20)
 	End If	
 End Sub
 
+Sub runsettings(el As Map)   'IgnoreDeadCode
+	'get the message for this scene
+	Dim msg As String = el.get("msg")
+	'read the progress
+	Dim lastP As Int = comp.getdata("progress")
+	'ensure its int
+	lastP = BANano.parseInt(lastP)
+	If lastP >= 100 Then
+		'we have reached 100%
+		BANano.Window.ClearInterval(thisInterval)
+		comp.setdata("progress", 0)
+		comp.setdata("msg", msg)
+	Else if lastP = 40 Then
+		comp.setdata("msg", "Applying rules...")
+		lastP = lastP + 1
+		comp.setdata("progress", lastP)
+	Else
+		lastP = lastP + 1
+		comp.setdata("progress", lastP)
+	End If
+End Sub
+
 'callback for watch
-Sub applystyle As Map
+Sub applystyle As Map   'IgnoreDeadCode
 	Dim scolor As String = comp.getdata("color")
 	Dim astyle As Map = CreateMap()
 	astyle.put("border-width", "8px")
@@ -114,7 +140,7 @@ Sub applystyle As Map
 	Return astyle
 End Sub
 
-Sub getspotstyle(el As Map) As Object
+Sub getspotstyle(el As Map) As Object  'IgnoreDeadCode
 	'get the active theme
 	Dim sactive As String = comp.getdata("activescene")
 	'get this theme

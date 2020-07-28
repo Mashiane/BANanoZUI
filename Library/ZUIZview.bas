@@ -260,6 +260,12 @@ mElement = mTarget.Append(strHTML).Get("#" & mName)
 
 End Sub
 
+
+Sub Bind(prop As String, value As String)
+	Dim skey As String = $":${prop}"$
+	AddAttr(skey, value)
+End Sub
+
 'return the generated html
 Sub ToString As String
 'build the 'class' attribute
@@ -1012,7 +1018,7 @@ End Sub
 'set cover image
 Sub SetCoverImage(url As String)
 	Dim imgKey As String = $"${mName}img"$
-	Dim img As ZUIZimage
+	Dim img As ZUIImage
 	img.Initialize(mCallBack, imgKey, imgKey)
 	img.AddAttr("slot", "image")
 	img.Src = url

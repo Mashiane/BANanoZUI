@@ -129,6 +129,12 @@ mElement.HandleEvents("done", mCallBack, mEventName & "_done")
 
 End Sub
 
+
+Sub Bind(prop As String, value As String)
+	Dim skey As String = $":${prop}"$
+	AddAttr(skey, value)
+End Sub
+
 'return the generated html
 Sub ToString As String
 'build the 'class' attribute
@@ -541,11 +547,6 @@ End Sub
 
 public Sub getVText() As String
 	Return mVText
-End Sub
-
-Sub AddSpot(t As String) As ZUIZdialog
-	sbText.Append(t)
-	Return Me
 End Sub
 
 'add a div slot extension

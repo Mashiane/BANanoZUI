@@ -12,10 +12,27 @@ Version=7
 #DesignerProperty: Key: Classes, DisplayName: Classes, FieldType: String, DefaultValue: , Description: Classes added to the HTML tag.
 #DesignerProperty: Key: Style, DisplayName: Style, FieldType: String, DefaultValue: , Description: Styles added to the HTML tag. Must be a json String.
 #DesignerProperty: Key: Attributes, DisplayName: Attributes, FieldType: String, DefaultValue: , Description: Attributes added to the HTML tag. Must be a json String.
-#DesignerProperty: Key: Views, DisplayName: Views, FieldType: String, DefaultValue: $options.components , Description: 
+#DesignerProperty: Key: Accesskey, DisplayName: Accesskey, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Autocomplete, DisplayName: Autocomplete, FieldType: Boolean, DefaultValue: False , Description: 
+#DesignerProperty: Key: Autofocus, DisplayName: Autofocus, FieldType: Boolean, DefaultValue: False , Description: 
+#DesignerProperty: Key: Checked, DisplayName: Checked, FieldType: Boolean, DefaultValue: False , Description: 
+#DesignerProperty: Key: Contenteditable, DisplayName: Contenteditable, FieldType: Boolean, DefaultValue: False , Description: 
+#DesignerProperty: Key: Contextmenu, DisplayName: Contextmenu, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Dir, DisplayName: Dir, FieldType: String, DefaultValue:  , Description: , List: ltr|rtl
+#DesignerProperty: Key: Draggable, DisplayName: Draggable, FieldType: String, DefaultValue:  , Description: , List: true|false|auto
+#DesignerProperty: Key: Dropzone, DisplayName: Dropzone, FieldType: String, DefaultValue:  , Description: , List: copy|move|link
+#DesignerProperty: Key: Hidden, DisplayName: Hidden, FieldType: Boolean, DefaultValue: False , Description: 
 #DesignerProperty: Key: Key, DisplayName: Key, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Lang, DisplayName: Lang, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: ParentId, DisplayName: ParentId, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Placeholder, DisplayName: Placeholder, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Readonly, DisplayName: Readonly, FieldType: Boolean, DefaultValue: False , Description: 
 #DesignerProperty: Key: Ref, DisplayName: Ref, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Required, DisplayName: Required, FieldType: Boolean, DefaultValue: False , Description: 
+#DesignerProperty: Key: Spellcheck, DisplayName: Spellcheck, FieldType: Boolean, DefaultValue: False , Description: 
+#DesignerProperty: Key: Tabindex, DisplayName: Tabindex, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: Title, DisplayName: Title, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: InputType, DisplayName: InputType, FieldType: String, DefaultValue: text , Description: , List: button|checkbox|color|date|datetime-local|email|file|hidden|image|month|number|password|radio|range|reset|search|submit|tel|text|time|url|week
 #DesignerProperty: Key: VBindClass, DisplayName: VBindClass, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VBindStyle, DisplayName: VBindStyle, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VElse, DisplayName: VElse, FieldType: String, DefaultValue:  , Description: 
@@ -27,7 +44,13 @@ Version=7
 #DesignerProperty: Key: VShow, DisplayName: VShow, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: VText, DisplayName: VText, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: BackgroundColor, DisplayName: BackgroundColor, FieldType: String, DefaultValue:  , Description: , List: amber|black|blue|blue-grey|brown|cyan|deep-orange|deep-purple|green|grey|indigo|light-blue|light-green|lime|orange|pink|purple|red|teal|transparent|white|yellow|primary|secondary|accent|error|info|success|warning|none
+#DesignerProperty: Key: BackgroundImage, DisplayName: BackgroundImage, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: BackgroundRepeat, DisplayName: BackgroundRepeat, FieldType: String, DefaultValue:  , Description: , List: repeat|repeat-x|repeat-y|no-repeat|initial|inherit
 #DesignerProperty: Key: Border, DisplayName: Border, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: BorderColor, DisplayName: BorderColor, FieldType: String, DefaultValue:  , Description: , List: amber|black|blue|blue-grey|brown|cyan|deep-orange|deep-purple|green|grey|indigo|light-blue|light-green|lime|orange|pink|purple|red|teal|transparent|white|yellow|primary|secondary|accent|error|info|success|warning|none
+#DesignerProperty: Key: BorderRadius, DisplayName: BorderRadius, FieldType: String, DefaultValue:  , Description: 
+#DesignerProperty: Key: BorderStyle, DisplayName: BorderStyle, FieldType: String, DefaultValue:  , Description: , List: none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset|initial|inherit
+#DesignerProperty: Key: BorderWidth, DisplayName: BorderWidth, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: Color, DisplayName: Color, FieldType: String, DefaultValue:  , Description: , List: amber|black|blue|blue-grey|brown|cyan|deep-orange|deep-purple|green|grey|indigo|light-blue|light-green|lime|orange|pink|purple|red|teal|transparent|white|yellow|primary|secondary|accent|error|info|success|warning|none
 #DesignerProperty: Key: FontFamily, DisplayName: FontFamily, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: FontSize, DisplayName: FontSize, FieldType: String, DefaultValue:  , Description: 
@@ -47,13 +70,6 @@ Version=7
 #DesignerProperty: Key: TextAlign, DisplayName: TextAlign, FieldType: String, DefaultValue:  , Description: , List: left|center|right|justify
 #DesignerProperty: Key: TextDecoration, DisplayName: TextDecoration, FieldType: String, DefaultValue:  , Description: 
 #DesignerProperty: Key: Width, DisplayName: Width, FieldType: String, DefaultValue:  , Description: 
-#DesignerProperty: Key: BackgroundImage, DisplayName: BackgroundImage, FieldType: String, DefaultValue:  , Description: 
-#DesignerProperty: Key: BackgroundRepeat, DisplayName: BackgroundRepeat, FieldType: String, DefaultValue:  , Description: , List: repeat|repeat-x|repeat-y|no-repeat|initial|inherit
-#DesignerProperty: Key: BorderColor, DisplayName: BorderColor, FieldType: String, DefaultValue:  , Description: , List: amber|black|blue|blue-grey|brown|cyan|deep-orange|deep-purple|green|grey|indigo|light-blue|light-green|lime|orange|pink|purple|red|teal|transparent|white|yellow|primary|secondary|accent|error|info|success|warning|none
-#DesignerProperty: Key: BorderRadius, DisplayName: BorderRadius, FieldType: String, DefaultValue:  , Description: 
-#DesignerProperty: Key: BorderStyle, DisplayName: BorderStyle, FieldType: String, DefaultValue:  , Description: , List: none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset|initial|inherit
-#DesignerProperty: Key: BorderWidth, DisplayName: BorderWidth, FieldType: String, DefaultValue:  , Description: 
-
 
 Sub Class_Globals
 Private BANano As BANano 'ignore
@@ -69,14 +85,31 @@ Private mText As String = ""
 Private classList As Map
 Private styleList As Map
 Private attributeList As Map
-Private mTagName As String = "z-canvas"
+Private mTagName As String = "input"
 Private sbText As StringBuilder
 Public bindings As Map
 Public methods As Map
-Private mViews As String = "$options.components"
+Private mAccesskey As String = ""
+Private mAutocomplete As Boolean = False
+Private mAutofocus As Boolean = False
+Private mChecked As Boolean = False
+Private mContenteditable As Boolean = False
+Private mContextmenu As String = ""
+Private mDir As String = ""
+Private mDraggable As String = ""
+Private mDropzone As String = ""
+Private mHidden As Boolean = False
 Private mKey As String = ""
+Private mLang As String = ""
 Private mParentId As String = ""
+Private mPlaceholder As String = ""
+Private mReadonly As Boolean = False
 Private mRef As String = ""
+Private mRequired As Boolean = False
+Private mSpellcheck As Boolean = False
+Private mTabindex As String = ""
+Private mTitle As String = ""
+	Private mInputType As String = "text"
 Private mVBindClass As String = ""
 Private mVBindStyle As String = ""
 Private mVElse As String = ""
@@ -88,7 +121,13 @@ Private mVModel As String = ""
 Private mVShow As String = ""
 Private mVText As String = ""
 Private mBackgroundColor As String = ""
+Private mBackgroundImage As String = ""
+Private mBackgroundRepeat As String = ""
 Private mBorder As String = ""
+Private mBorderColor As String = ""
+Private mBorderRadius As String = ""
+Private mBorderStyle As String = ""
+Private mBorderWidth As String = ""
 Private mColor As String = ""
 Private mFontFamily As String = ""
 Private mFontSize As String = ""
@@ -107,14 +146,7 @@ Private mPaddingRight As String = ""
 Private mPaddingTop As String = ""
 Private mTextAlign As String = ""
 Private mTextDecoration As String = ""
-	Private mWidth As String = ""
-	Private mBackgroundImage As String
-	Private mBackgroundRepeat As String
-	Private mBorderColor As String
-	Private mBorderRadius As String
-	Private mBorderStyle As String
-	Private mBorderWidth As String
-
+Private mWidth As String = ""
 End Sub
 
 'initialize the custom view
@@ -138,10 +170,27 @@ mClasses = Props.Get("Classes")
 mAttributes = Props.Get("Attributes")
 mStyle = Props.Get("Style")
 mText = Props.Get("Text")
-mViews = Props.Get("Views")
+mAccesskey = Props.Get("Accesskey")
+mAutocomplete = Props.Get("Autocomplete")
+mAutofocus = Props.Get("Autofocus")
+mChecked = Props.Get("Checked")
+mContenteditable = Props.Get("Contenteditable")
+mContextmenu = Props.Get("Contextmenu")
+mDir = Props.Get("Dir")
+mDraggable = Props.Get("Draggable")
+mDropzone = Props.Get("Dropzone")
+mHidden = Props.Get("Hidden")
 mKey = Props.Get("Key")
+mLang = Props.Get("Lang")
 mParentId = Props.Get("ParentId")
+mPlaceholder = Props.Get("Placeholder")
+mReadonly = Props.Get("Readonly")
 mRef = Props.Get("Ref")
+mRequired = Props.Get("Required")
+mSpellcheck = Props.Get("Spellcheck")
+mTabindex = Props.Get("Tabindex")
+mTitle = Props.Get("Title")
+		mInputType = Props.Get("InputType")
 mVBindClass = Props.Get("VBindClass")
 mVBindStyle = Props.Get("VBindStyle")
 mVElse = Props.Get("VElse")
@@ -153,7 +202,13 @@ mVModel = Props.Get("VModel")
 mVShow = Props.Get("VShow")
 mVText = Props.Get("VText")
 mBackgroundColor = Props.Get("BackgroundColor")
+mBackgroundImage = Props.Get("BackgroundImage")
+mBackgroundRepeat = Props.Get("BackgroundRepeat")
 mBorder = Props.Get("Border")
+mBorderColor = Props.Get("BorderColor")
+mBorderRadius = Props.Get("BorderRadius")
+mBorderStyle = Props.Get("BorderStyle")
+mBorderWidth = Props.Get("BorderWidth")
 mColor = Props.Get("Color")
 mFontFamily = Props.Get("FontFamily")
 mFontSize = Props.Get("FontSize")
@@ -172,20 +227,31 @@ mPaddingRight = Props.Get("PaddingRight")
 mPaddingTop = Props.Get("PaddingTop")
 mTextAlign = Props.Get("TextAlign")
 mTextDecoration = Props.Get("TextDecoration")
-		mWidth = Props.Get("Width")
-		mBackgroundImage = Props.Get("BackgroundImage")
-		mBackgroundRepeat = Props.Get("BackgroundRepeat")
-		mBorderColor = Props.Get("BorderColor")
-		mBorderRadius = Props.Get("BorderRadius")
-		mBorderStyle = Props.Get("BorderStyle")
-		mBorderWidth = Props.Get("BorderWidth")
-
+mWidth = Props.Get("Width")
 End If
 
-AddAttr(":views", mViews)
+AddAttr("accesskey", mAccesskey)
+AddAttr("autocomplete", mAutocomplete)
+AddAttr("autofocus", mAutofocus)
+AddAttr("checked", mChecked)
+AddAttr("contenteditable", mContenteditable)
+AddAttr("contextmenu", mContextmenu)
+AddAttr("dir", mDir)
+AddAttr("draggable", mDraggable)
+AddAttr("dropzone", mDropzone)
+AddAttr("hidden", mHidden)
 AddAttr("key", mKey)
+AddAttr("lang", mLang)
+AddAttr("name", mName)
 AddAttr("parent-id", mParentId)
+AddAttr("placeholder", mPlaceholder)
+AddAttr("readonly", mReadonly)
 AddAttr("ref", mRef)
+AddAttr("required", mRequired)
+AddAttr("spellcheck", mSpellcheck)
+AddAttr("tabindex", mTabindex)
+AddAttr("title", mTitle)
+	AddAttr("type", mInputType)
 AddAttr("v-bind:class", mVBindClass)
 AddAttr("v-bind:style", mVBindStyle)
 AddAttr("v-else", mVElse)
@@ -197,7 +263,13 @@ AddAttr("v-model", mVModel)
 AddAttr("v-show", mVShow)
 AddAttr("v-text", mVText)
 AddStyle("background-color", mBackgroundColor)
+AddStyle("background-image", mBackgroundImage)
+AddStyle("background-repeat", mBackgroundRepeat)
 AddStyle("border", mBorder)
+AddStyle("border-color", mBorderColor)
+AddStyle("border-radius", mBorderRadius)
+AddStyle("border-style", mBorderStyle)
+AddStyle("border-width", mBorderWidth)
 AddStyle("color", mColor)
 AddStyle("font-family", mFontFamily)
 AddStyle("font-size", mFontSize)
@@ -216,14 +288,7 @@ AddStyle("padding-right", mPaddingRight)
 AddStyle("padding-top", mPaddingTop)
 AddStyle("text-align", mTextAlign)
 AddStyle("text-decoration", mTextDecoration)
-	AddStyle("width", mWidth)
-	AddStyle("background-image", mBackgroundImage)
-	AddStyle("background-repeat", mBackgroundRepeat)
-	AddStyle("border-color", mBorderColor)
-	AddStyle("border-radius", mBorderRadius)
-	AddStyle("border-style", mBorderStyle)
-	AddStyle("border-width", mBorderWidth)
-
+AddStyle("width", mWidth)
 AddClass(mClasses)
 setAttributes(mAttributes)
 setStyles(mStyle)
@@ -233,11 +298,6 @@ Dim strHTML As String = ToString
 mElement = mTarget.Append(strHTML).Get("#" & mName)
 'add events for the custom view, if any
 
-End Sub
-
-Sub Bind(prop As String, value As String)
-	Dim skey As String = $":${prop}"$
-	AddAttr(skey, value)
 End Sub
 
 'return the generated html
@@ -250,7 +310,7 @@ Dim styleName As String = BANanoShared.BuildStyle(styleList)
 AddAttr("style", styleName)
 'build element internal structure
 Dim iStructure As String = BANanoShared.BuildAttributes(attributeList)
-Dim rslt As String = $"<${mTagName} id="${mName}" ${iStructure}>${mText}</${mTagName}>"$
+Dim rslt As String = $"<${mTagName} id="${mName}" ${iStructure}>${mText}${sbText.tostring}</${mTagName}>"$
 Return rslt
 End Sub
 
@@ -368,25 +428,25 @@ public Sub AddClass(varClass As String)
 If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
-If varClass = "" Then Return
+if varClass = "" Then Return
 If mElement <> Null Then mElement.AddClass(varClass)
-Dim mItems As List = BANanoShared.StrParse(" ", varClass)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
+For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
 End Sub
 
 'add a class on condition
-public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As Boolean)
+public Sub AddClassOnCondition(varClass As String, varCondition As Boolean, varShouldBe As boolean)
 If BANano.IsUndefined(varCondition) Or BANano.IsNull(varCondition) Then Return
-If varShouldBe <> varCondition Then Return
+if varShouldBe <> varCondition Then Return
 If BANano.IsUndefined(varClass) Or BANano.IsNull(varClass) Then Return
 If BANano.IsNumber(varClass) Then varClass = BANanoShared.CStr(varClass)
 varClass = varClass.trim
 If varClass = "" Then Return
 If mElement <> Null Then mElement.AddClass(varClass)
-Dim mItems As List = BANanoShared.StrParse(" ", varClass)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(" ", varClass)
+For Each mt As String In mxItems
 classList.put(mt, mt)
 Next
 End Sub
@@ -401,17 +461,19 @@ aStyle.put(varProp, varStyle)
 Dim sStyle As String = BANano.ToJSON(aStyle)
 mElement.SetStyle(sStyle)
 End If
-styleList.put(varProp, varStyle)
+	styleList.put(varProp, varStyle)
 End Sub
 
 'add an attribute
-public Sub AddAttr(varProp As String, varValue As String)
-	If BANano.IsUndefined(varValue) Or BANano.IsNull(varValue) Then Return
+public Sub AddAttr(varProp As String, varValue As String) As ZUIInput
+	If BANano.IsUndefined(varValue) Or BANano.IsNull(varValue) Then Return Me
 	If BANano.IsNumber(varValue) Then varValue = BANanoShared.CStr(varValue)
 	'we are adding a boolean
 	If BANano.IsBoolean(varValue) Then
-		attributeList.put(varProp, varValue)
-		If mElement <> Null Then mElement.SetAttr(varProp, varValue)
+		If varValue = True Then
+			attributeList.put(varProp, varValue)
+			If mElement <> Null Then mElement.SetAttr(varProp, varValue)
+		End If
 	Else
 		'we are adding a string
 		If varValue.StartsWith(":") Then
@@ -429,11 +491,12 @@ public Sub AddAttr(varProp As String, varValue As String)
 			If mElement <> Null Then mElement.SetAttr(varProp, varValue)
 			attributeList.put(varProp, varValue)
 			Select Case varProp
-			Case "v-model", "v-show", "v-if", "required", "disabled", "readonly"
-				bindings.Put(varValue, Null)
+				Case "v-model", "v-show", "v-if", "required", "disabled", "readonly"
+					bindings.Put(varValue, Null)
 			End Select
 		End If
 	End If
+	Return Me
 End Sub
 
 'returns the class names
@@ -475,8 +538,8 @@ End Sub
 
 'sets the attributes
 public Sub setAttributes(varAttributes As String)
-Dim mItems As List = BANanoShared.StrParse(";", varAttributes)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(";", varAttributes)
+For Each mt As String In mxItems
 Dim k As String = BANanoShared.MvField(mt,1,"=")
 Dim v As String = BANanoShared.MvField(mt,2,"=")
 If mElement <> Null Then mElement.SetAttr(k, v)
@@ -486,8 +549,8 @@ End Sub
 
 'sets the styles from the designer
 public Sub setStyles(varStyles As String)
-Dim mItems As List = BANanoShared.StrParse(",", varStyles)
-For Each mt As String In mItems
+Dim mxItems As List = BANanoShared.StrParse(",", varStyles)
+For Each mt As String In mxItems
 Dim k As String = BANanoShared.MvField(mt,1,":")
 Dim v As String = BANanoShared.MvField(mt,2,":")
 AddStyle(k, v)
@@ -498,7 +561,7 @@ End Sub
 public Sub getAttributes() As String
 Dim sbAttr As StringBuilder
 sbAttr.Initialize
-For Each k As String In attributeList.Keys
+For each k As String in attributeList.Keys
 Dim v As String = attributeList.Get(k)
 sbAttr.Append(k).Append("=").Append(v).Append(";")
 Next
@@ -519,13 +582,94 @@ public Sub getText() As String
 Return mText
 End Sub
 
-public Sub setViews(varViews As String)
-AddAttr(":views", varViews)
-mViews = varViews
+public Sub setAccesskey(varAccesskey As String)
+AddAttr("accesskey", varAccesskey)
+mAccesskey = varAccesskey
 End Sub
 
-public Sub getViews() As String
-Return mViews
+public Sub getAccesskey() As String
+Return mAccesskey
+End Sub
+
+public Sub setAutocomplete(varAutocomplete As Boolean)
+AddAttr("autocomplete", varAutocomplete)
+mAutocomplete = varAutocomplete
+End Sub
+
+public Sub getAutocomplete() As Boolean
+Return mAutocomplete
+End Sub
+
+public Sub setAutofocus(varAutofocus As Boolean)
+AddAttr("autofocus", varAutofocus)
+mAutofocus = varAutofocus
+End Sub
+
+public Sub getAutofocus() As Boolean
+Return mAutofocus
+End Sub
+
+public Sub setChecked(varChecked As Boolean)
+AddAttr("checked", varChecked)
+mChecked = varChecked
+End Sub
+
+public Sub getChecked() As Boolean
+Return mChecked
+End Sub
+
+public Sub setContenteditable(varContenteditable As Boolean)
+AddAttr("contenteditable", varContenteditable)
+mContenteditable = varContenteditable
+End Sub
+
+public Sub getContenteditable() As Boolean
+Return mContenteditable
+End Sub
+
+public Sub setContextmenu(varContextmenu As String)
+AddAttr("contextmenu", varContextmenu)
+mContextmenu = varContextmenu
+End Sub
+
+public Sub getContextmenu() As String
+Return mContextmenu
+End Sub
+
+public Sub setDir(varDir As String)
+AddAttr("dir", varDir)
+mDir = varDir
+End Sub
+
+public Sub getDir() As String
+Return mDir
+End Sub
+
+public Sub setDraggable(varDraggable As String)
+AddAttr("draggable", varDraggable)
+mDraggable = varDraggable
+End Sub
+
+public Sub getDraggable() As String
+Return mDraggable
+End Sub
+
+public Sub setDropzone(varDropzone As String)
+AddAttr("dropzone", varDropzone)
+mDropzone = varDropzone
+End Sub
+
+public Sub getDropzone() As String
+Return mDropzone
+End Sub
+
+public Sub setHidden(varHidden As Boolean)
+AddAttr("hidden", varHidden)
+mHidden = varHidden
+End Sub
+
+public Sub getHidden() As Boolean
+Return mHidden
 End Sub
 
 public Sub setKey(varKey As String)
@@ -537,6 +681,15 @@ public Sub getKey() As String
 Return mKey
 End Sub
 
+public Sub setLang(varLang As String)
+AddAttr("lang", varLang)
+mLang = varLang
+End Sub
+
+public Sub getLang() As String
+Return mLang
+End Sub
+
 public Sub setParentId(varParentId As String)
 AddAttr("parent-id", varParentId)
 mParentId = varParentId
@@ -546,6 +699,24 @@ public Sub getParentId() As String
 Return mParentId
 End Sub
 
+public Sub setPlaceholder(varPlaceholder As String)
+AddAttr("placeholder", varPlaceholder)
+mPlaceholder = varPlaceholder
+End Sub
+
+public Sub getPlaceholder() As String
+Return mPlaceholder
+End Sub
+
+public Sub setReadonly(varReadonly As Boolean)
+AddAttr("readonly", varReadonly)
+mReadonly = varReadonly
+End Sub
+
+public Sub getReadonly() As Boolean
+Return mReadonly
+End Sub
+
 public Sub setRef(varRef As String)
 AddAttr("ref", varRef)
 mRef = varRef
@@ -553,6 +724,51 @@ End Sub
 
 public Sub getRef() As String
 Return mRef
+End Sub
+
+public Sub setRequired(varRequired As Boolean)
+AddAttr("required", varRequired)
+mRequired = varRequired
+End Sub
+
+public Sub getRequired() As Boolean
+Return mRequired
+End Sub
+
+public Sub setSpellcheck(varSpellcheck As Boolean)
+AddAttr("spellcheck", varSpellcheck)
+mSpellcheck = varSpellcheck
+End Sub
+
+public Sub getSpellcheck() As Boolean
+Return mSpellcheck
+End Sub
+
+public Sub setTabindex(varTabindex As String)
+AddAttr("tabindex", varTabindex)
+mTabindex = varTabindex
+End Sub
+
+public Sub getTabindex() As String
+Return mTabindex
+End Sub
+
+public Sub setTitle(varTitle As String)
+AddAttr("title", varTitle)
+mTitle = varTitle
+End Sub
+
+public Sub getTitle() As String
+Return mTitle
+End Sub
+
+public Sub setInputType(varType As String)
+AddAttr("type", varType)
+mInputType = varType
+End Sub
+
+public Sub getInputType() As String
+	Return mInputType
 End Sub
 
 public Sub setVBindClass(varVBindClass As String)
@@ -654,6 +870,24 @@ public Sub getBackgroundColor() As String
 Return mBackgroundColor
 End Sub
 
+public Sub setBackgroundImage(varBackgroundImage As String)
+AddStyle("background-image", varBackgroundImage)
+mBackgroundImage = varBackgroundImage
+End Sub
+
+public Sub getBackgroundImage() As String
+Return mBackgroundImage
+End Sub
+
+public Sub setBackgroundRepeat(varBackgroundRepeat As String)
+AddStyle("background-repeat", varBackgroundRepeat)
+mBackgroundRepeat = varBackgroundRepeat
+End Sub
+
+public Sub getBackgroundRepeat() As String
+Return mBackgroundRepeat
+End Sub
+
 public Sub setBorder(varBorder As String)
 AddStyle("border", varBorder)
 mBorder = varBorder
@@ -661,6 +895,42 @@ End Sub
 
 public Sub getBorder() As String
 Return mBorder
+End Sub
+
+public Sub setBorderColor(varBorderColor As String)
+AddStyle("border-color", varBorderColor)
+mBorderColor = varBorderColor
+End Sub
+
+public Sub getBorderColor() As String
+Return mBorderColor
+End Sub
+
+public Sub setBorderRadius(varBorderRadius As String)
+AddStyle("border-radius", varBorderRadius)
+mBorderRadius = varBorderRadius
+End Sub
+
+public Sub getBorderRadius() As String
+Return mBorderRadius
+End Sub
+
+public Sub setBorderStyle(varBorderStyle As String)
+AddStyle("border-style", varBorderStyle)
+mBorderStyle = varBorderStyle
+End Sub
+
+public Sub getBorderStyle() As String
+Return mBorderStyle
+End Sub
+
+public Sub setBorderWidth(varBorderWidth As String)
+AddStyle("border-width", varBorderWidth)
+mBorderWidth = varBorderWidth
+End Sub
+
+public Sub getBorderWidth() As String
+Return mBorderWidth
 End Sub
 
 public Sub setColor(varColor As String)
@@ -831,64 +1101,17 @@ mWidth = varWidth
 End Sub
 
 public Sub getWidth() As String
-	Return mWidth
+Return mWidth
 End Sub
 
 
-
-public Sub setBackgroundImage(varBackgroundImage As String)
-	AddStyle("background-image", varBackgroundImage)
-	mBackgroundImage = varBackgroundImage
+'add input to view
+Sub AddToForm(vName As ZUIForm)
+	AddToParent(vName.ID)
 End Sub
 
-public Sub getBackgroundImage() As String
-	Return mBackgroundImage
+'add input to view
+Sub AddToView(vName As ZUIZview)
+	AddToParent(vName.ID)
 End Sub
-
-public Sub setBackgroundRepeat(varBackgroundRepeat As String)
-	AddStyle("background-repeat", varBackgroundRepeat)
-	mBackgroundRepeat = varBackgroundRepeat
-End Sub
-
-public Sub getBackgroundRepeat() As String
-	Return mBackgroundRepeat
-End Sub
-
-public Sub setBorderColor(varBorderColor As String)
-	AddStyle("border-color", varBorderColor)
-	mBorderColor = varBorderColor
-End Sub
-
-public Sub getBorderColor() As String
-	Return mBorderColor
-End Sub
-
-public Sub setBorderRadius(varBorderRadius As String)
-	AddStyle("border-radius", varBorderRadius)
-	mBorderRadius = varBorderRadius
-End Sub
-
-public Sub getBorderRadius() As String
-	Return mBorderRadius
-End Sub
-
-public Sub setBorderStyle(varBorderStyle As String)
-	AddStyle("border-style", varBorderStyle)
-	mBorderStyle = varBorderStyle
-End Sub
-
-public Sub getBorderStyle() As String
-	Return mBorderStyle
-End Sub
-
-public Sub setBorderWidth(varBorderWidth As String)
-	AddStyle("border-width", varBorderWidth)
-	mBorderWidth = varBorderWidth
-End Sub
-
-public Sub getBorderWidth() As String
-	Return mBorderWidth
-End Sub
-
-
 

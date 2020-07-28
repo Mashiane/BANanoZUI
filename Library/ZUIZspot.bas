@@ -234,6 +234,7 @@ mTextDecoration = Props.Get("TextDecoration")
 
 End If
 
+
 AddAttr("angle", mAngle)
 AddAttr("button", mButton)
 AddAttr("distance", mDistance)
@@ -302,6 +303,12 @@ mElement = mTarget.Append(strHTML).Get("#" & mName)
 'add events for the custom view, if any
 mElement.HandleEvents("click.native", mCallBack, mEventName & "_click.native")
 
+End Sub
+
+
+Sub Bind(prop As String, value As String)
+	Dim skey As String = $":${prop}"$
+	AddAttr(skey, value)
 End Sub
 
 'return the generated html
@@ -403,6 +410,11 @@ End Sub
 
 'add spot to view slot
 Sub AddToViewSlot(vName As ZUIZview)
+	AddToParent($"${vName.id}slot"$)
+End Sub
+
+'add spot to dialog slot
+Sub AddToDialogSlot(vName As ZUIZdialog)
 	AddToParent($"${vName.id}slot"$)
 End Sub
 

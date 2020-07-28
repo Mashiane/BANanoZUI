@@ -5,6 +5,7 @@ Type=StaticCode
 Version=8.5
 @EndOfDesignText@
 'Static code module
+'#IgnoreWarnings:12
 Sub Process_Globals
 	Private BANano As BANano   'ignore
 	Private sh As VueApp
@@ -91,6 +92,8 @@ Sub Initialize
 	cdialog.VOnDone = "cbclosedialog"
 	cdialog.Text = "Are you sure?"
 	cdialog.AddDivSlotExtension
+	cdialog.AddToViewSlot(zview)
+	'
 	'add yes button
 	Dim btnYes As ZUIZspot
 	btnYes.Initialize(Me, "btnYes", "btnYes")
@@ -98,12 +101,12 @@ Sub Initialize
 	btnYes.AddClass("success")
 	btnYes.Angle = 45
 	btnYes.size = "s"
-	btnYes.distance = 80
+	btnYes.distance = 120
 	'must fire the reset callback
 	btnYes.VOnClickNative = "cbreset"
 	btnYes.AddIcon("", "fas fa-check")
-	cdialog.AddSpot(btnYes.tostring)
-'	'
+	btnYes.AddToDialogSlot(cdialog)
+	'
 '	'add no button
 	Dim btnNo As ZUIZspot
 	btnNo.Initialize(Me, "btnNo", "btnNo")
@@ -111,13 +114,12 @@ Sub Initialize
 	btnNo.AddClass("danger")
 	btnNo.Angle = 135
 	btnNo.size = "s"
-	btnNo.distance = 80
+	btnNo.distance = 120
 	'must fire the reset callback
 	btnNo.VOnClickNative = "cbclosedialog"
 	btnNo.AddIcon("", "fas fa-times")
-	cdialog.AddSpot(btnNo.tostring)
-'	'add dialog to view
-	cdialog.AddToViewSlot(zview)
+	btnNo.AddToDialogSlot(cdialog)
+	'add dialog to view
 	'register the event
 	comp.setmethod(Me, "cbreset")
 	comp.setmethod(Me, "cbopendialog")
@@ -129,7 +131,7 @@ Sub Initialize
 End Sub
 
 'reset the logs
-Sub cbreset
+Sub cbreset   'IgnoreDeadCode
 	'clear the log
 	homelog = sh.NewList
 	homelog.Add("No events available")
@@ -140,10 +142,10 @@ Sub cbreset
 End Sub
 
 
-Sub cbopendialog
+Sub cbopendialog   'IgnoreDeadCode
 	sh.setdata("opendialog", True)
 End Sub
 
-Sub cbclosedialog
+Sub cbclosedialog   'IgnoreDeadCode
 	sh.SetData("opendialog", False)
 End Sub

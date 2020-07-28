@@ -98,7 +98,7 @@ Sub Class_Globals
 	'Private targetID As String
 	Public store As BANanoObject
 	Public state As Map
-	Public ZUICanvas As ZUIZcanvas
+	Public ZCanvas As ZUIZcanvas
 	Private body As BANanoElement
 	'
 	
@@ -114,8 +114,9 @@ Public Sub Initialize(Module As Object) As VueApp
 	body.Append($"<div id="app"></div>"$)
 	
 	VAP.Initialize("Vue")
-	zircle.Initialize("zircle")
-	Use(zircle)
+	'zircle.Initialize("zircle")
+	'Use(zircle)
+	'
 	'***use a global prototype
 	state.Initialize
 		
@@ -148,8 +149,8 @@ Public Sub Initialize(Module As Object) As VueApp
 	InitColors
 	'
 	'add the canvas to the page
-	ZUICanvas.Initialize(Module, "canvas", "canvas")
-	ZUICanvas.Views = "$options.components"
+	ZCanvas.Initialize(Module, "zcanvas", "zcanvas")
+	ZCanvas.Views = "$options.components"
 	
 	'add the placeholder div to the app
 	Dim placeholder As VHTML
@@ -161,6 +162,7 @@ Public Sub Initialize(Module As Object) As VueApp
 	'
 	Return Me
 End Sub
+
 
 private Sub InitColors
 	ColorMap.Initialize
@@ -980,8 +982,8 @@ Sub Serve
 	store = VAP.RunMethod("observable", Array(state))
 	VAP.GetField("prototype").SetField("$store", store)
 	'
-	ZUICanvas.AddToParent("app")
-	ZUICanvas.AddToApp(Me)
+	ZCanvas.AddToParent("app")
+	ZCanvas.AddToApp(Me)
 	
 	'sourceID = sourceID.Replace("#","")
 	'targetID = targetID.Replace("#","")

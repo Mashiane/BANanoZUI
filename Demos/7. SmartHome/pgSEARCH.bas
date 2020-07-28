@@ -28,13 +28,13 @@ Sub Initialize
 	zview.Text = "Search"
 	zview.AddToPlaceholder
 	'
-	Dim zform As ZUIZform
+	Dim zform As ZUIForm
 	zform.Initialize(Me, "zform", "zform")
 	zform.action = "search_submit"
 	zform.method = "get"
 	zform.acceptcharset = "utf-8"
 	'add input
-	Dim zinput As ZUIZinput
+	Dim zinput As ZUIInput
 	zinput.Initialize(Me, "devices", "devices")
 	zinput.InputType = "text"
 	zform.AddInput(zinput)

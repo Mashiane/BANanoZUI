@@ -117,8 +117,122 @@ Public Sub Initialize (CallBack As Object, Name As String, EventName As String) 
 	jsBoolean.Initialize("Boolean")
 	jsArray.Initialize("Array")
 	jsObject.Initialize("Object")
+	'
+	SetBeforeCreate(mCallBack, "BeforeCreate")
+	SetCreated(mCallBack, "Created")
+	SetBeforeMount(mCallBack, "BeforeMount")
+	SetMounted(mCallBack, "Mounted")
+	SetBeforeUpdate(mCallBack, "BeforeUpdate")
+	SetUpdated(mCallBack, "Updated")
+	SetBeforeDestroy(mCallBack, "BeforeDestroy")
+	SetDestroyed(mCallBack, "Destroyed")
 	Return Me
 End Sub
+
+'set mounted
+Sub SetMounted(module As Object, methodName As String) As VMElement
+	methodName = methodName.ToLowerCase
+	If SubExists(module, methodName) = False Then Return Me
+	Dim mounted As BANanoObject = BANano.CallBack(module, methodName, Null)
+	opt.Put("mounted", mounted)
+	SetMethod(module, methodName)
+	Return Me
+End Sub
+
+'set updated
+Sub SetUpdated(module As Object, methodName As String) As VMElement
+	methodName = methodName.ToLowerCase
+	If SubExists(module, methodName) = False Then Return Me
+	Dim updated As BANanoObject = BANano.CallBack(module, methodName, Null)
+	opt.Put("updated", updated)
+	SetMethod(module, methodName)
+	Return Me
+End Sub
+
+'set beforemount
+Sub SetBeforeMount(module As Object, methodName As String) As VMElement
+	methodName = methodName.ToLowerCase
+	If SubExists(module, methodName) = False Then Return Me
+	Dim beforeMount As BANanoObject = BANano.CallBack(module, methodName, Null)
+	opt.Put("beforeMount", beforeMount)
+	SetMethod(module, methodName)
+	Return Me
+End Sub
+
+'set beforeupdate
+Sub SetBeforeUpdate(module As Object, methodName As String) As VMElement
+	methodName = methodName.ToLowerCase
+	If SubExists(module, methodName) = False Then Return Me
+	Dim beforeUpdate As Boolean = BANano.CallBack(module, methodName, Null)
+	opt.Put("beforeUpdate", beforeUpdate)
+	SetMethod(module, methodName)
+	Return Me
+End Sub
+
+'set before destroy
+Sub SetBeforeDestroy(module As Object, methodName As String) As VMElement
+	methodName = methodName.ToLowerCase
+	If SubExists(module, methodName) = False Then Return Me
+	Dim beforeDestroy As Boolean = BANano.CallBack(module, methodName, Null)
+	opt.Put("beforeDestroy", beforeDestroy)
+	SetMethod(module, methodName)
+	Return Me
+End Sub
+
+
+'set before created
+Sub SetBeforeCreate(module As Object, methodName As String) As VMElement
+	methodName = methodName.ToLowerCase
+	If SubExists(module, methodName) = False Then Return Me
+	Dim beforeCreate As BANanoObject = BANano.CallBack(module, methodName, Null)
+	opt.Put("beforeCreate", beforeCreate)
+	SetMethod(module, methodName)
+	Return Me
+End Sub
+
+
+'set created
+Sub SetCreated(module As Object, methodName As String) As VMElement
+	methodName = methodName.ToLowerCase
+	If SubExists(module, methodName) = False Then Return Me
+	Dim created As BANanoObject = BANano.CallBack(module, methodName, Null)
+	opt.Put("created", created)
+	SetMethod(module, methodName)
+	Return Me
+End Sub
+
+'set destroyed
+Sub SetDestroyed(module As Object, methodName As String) As VMElement
+	methodName = methodName.ToLowerCase
+	If SubExists(module, methodName) = False Then Return Me
+	Dim destroyed As BANanoObject = BANano.CallBack(module, methodName, Null)
+	opt.Put("destroyed", destroyed)
+	SetMethod(module, methodName)
+	Return Me
+End Sub
+
+
+'set activated
+Sub SetActivated(module As Object, methodName As String) As VMElement
+	methodName = methodName.ToLowerCase
+	If SubExists(module, methodName) = False Then Return Me
+	Dim activated As BANanoObject = BANano.CallBack(module, methodName, Null)
+	opt.Put("activated", activated)
+	SetMethod(module, methodName)
+	Return Me
+End Sub
+
+
+'set deactivated
+Sub SetDeActivated(module As Object, methodName As String) As VMElement
+	methodName = methodName.ToLowerCase
+	If SubExists(module, methodName) = False Then Return Me
+	Dim deactivated As BANanoObject = BANano.CallBack(module, methodName, Null)
+	opt.Put("deactivated", deactivated)
+	SetMethod(module, methodName)
+	Return Me
+End Sub
+
 
 'add a component we have defined internally
 Sub AddComponent(comp As VMElement)
@@ -364,36 +478,72 @@ Sub SetID(varText As String) As VMElement
 End Sub
 
 
-'will add properties to attributes
-private Sub AddAttr(varName As String, actProp As String) As VMElement
-	If actProp = "caption" Then Return Me
-	Try
-		If BANano.IsBoolean(varName) Then
-			If varName = True Then properties.put(actProp, varName)
-		Else
-			If varName.StartsWith(":") Then
-				'this is a binding
-				'get the real name
-				Dim rname As String = BANanoShared.MidString2(varName, 2)
-				If rname.Contains(".") Then
-					'we are linked to a for loop
-					properties.Put($":${actProp}"$, rname)
-				Else
-					properties.Put($":${actProp}"$, rname)
-					data.Put(rname, Null)
-				End If
-			Else
-				If varName <> "" Then properties.put(actProp, varName)
-				Select Case actProp
-					Case "v-model", "v-show", "v-if", "required", "disabled", "readonly"
-						data.Put(varName, False)
-				End Select
-			End If
+''will add properties to attributes
+'private Sub AddAttr(varName As String, actProp As String) As VMElement
+'	If actProp = "caption" Then Return Me
+'	Try
+'		If BANano.IsBoolean(varName) Then
+'			If varName = True Then properties.put(actProp, varName)
+'		Else
+'			If varName.StartsWith(":") Then
+'				'this is a binding
+'				'get the real name
+'				Dim rname As String = BANanoShared.MidString2(varName, 2)
+'				If rname.Contains(".") Then
+'					'we are linked to a for loop
+'					properties.Put($":${actProp}"$, rname)
+'				Else
+'					properties.Put($":${actProp}"$, rname)
+'					data.Put(rname, Null)
+'				End If
+'			Else
+'				If varName <> "" Then properties.put(actProp, varName)
+'				Select Case actProp
+'					Case "v-model", "v-show", "v-if", "required", "disabled", "readonly"
+'						data.Put(varName, False)
+'				End Select
+'			End If
+'		End If
+'	Catch
+'		Log(LastException)
+'	
+'	End Try
+'	Return Me
+'End Sub
+
+
+'add an attribute
+public Sub AddAttr(varvalue As String, varProp As String) As VMElement
+	If BANano.IsUndefined(varvalue) Or BANano.IsNull(varvalue) Then Return Me
+	If BANano.IsNumber(varvalue) Then varvalue = BANanoShared.CStr(varvalue)
+	'we are adding a boolean
+	If BANano.IsBoolean(varvalue) Then
+		If varvalue = True Then 
+			properties.put(varProp, varvalue)
+			If mElement <> Null Then mElement.SetAttr(varProp, varvalue)
 		End If
-	Catch
-		Log(LastException)
-	
-	End Try
+	Else
+		'we are adding a string
+		If varvalue.StartsWith(":") Then
+			If varvalue.StartsWith("$") Then
+				properties.put(varProp, varvalue)
+				If mElement <> Null Then mElement.SetAttr(varProp, varvalue)
+			Else
+				Dim rname As String = BANanoShared.MidString2(varvalue, 2)
+				If rname.Contains(".") = False Then data.Put(rname, Null)
+				properties.put($":${varProp}"$, rname)
+				If mElement <> Null Then mElement.SetAttr($":${varProp}"$, varvalue)
+			End If
+		Else
+			'does not start with :
+			If mElement <> Null Then mElement.SetAttr(varProp, varvalue)
+			properties.put(varProp, varvalue)
+			Select Case varProp
+				Case "v-model", "v-show", "v-if", "required", "disabled", "readonly"
+					data.Put(varvalue, Null)
+			End Select
+		End If
+	End If
 	Return Me
 End Sub
 
@@ -990,28 +1140,6 @@ End Sub
 Sub RefreshKey(keyName As String) As VMElement
 	keyName = keyName.ToLowerCase
 	SetData(keyName, DateTime.now)
-	Return Me
-End Sub
-
-
-'set beforemount
-Sub SetBeforeMount(module As Object, methodName As String) As VMElement
-	methodName = methodName.ToLowerCase
-	If SubExists(module, methodName) = False Then Return Me
-	Dim beforeMount As BANanoObject = BANano.CallBack(module, methodName, Null)
-	opt.Put("beforeMount", beforeMount)
-	SetMethod(module, methodName)
-	Return Me
-End Sub
-
-
-'set mounted
-Sub SetMounted(module As Object, methodName As String) As VMElement
-	methodName = methodName.ToLowerCase
-	If SubExists(module, methodName) = False Then Return Me
-	Dim mounted As BANanoObject = BANano.CallBack(module, methodName, Null)
-	opt.Put("mounted", mounted)
-	SetMethod(module, methodName)
 	Return Me
 End Sub
 

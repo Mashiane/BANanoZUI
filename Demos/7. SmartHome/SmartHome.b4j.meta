@@ -40,6 +40,6 @@ ModuleClosedNodes6=
 ModuleClosedNodes7=
 ModuleClosedNodes8=
 ModuleClosedNodes9=
-NavigationStack=pgLIVING,showme,71,0,pgSCENES,Process_Globals,6,0,pgSCENES,applystyle,107,6,pgSCENES,getspotstyle,121,6,pgSCENES,showme,90,6,pgLIVING,Initialize,33,6,pgTV,Initialize,53,1,pgSCENES,Initialize,38,6,pgFAMILY,Initialize,23,4,Main,Process_Globals,9,0
+NavigationStack=pgFAMILY,Initialize,49,1,pgDEVICES,Initialize,64,1,pgSCENES,Initialize,62,2,pgTV,Process_Globals,4,0,pgLIVING,Initialize,101,6,pgLIVING,getstate,113,6,pgLIVING,setrelax,117,6,pgLIVING,showme,135,6,pgLIVING,runsettings,181,6,pgTV,Initialize,61,6
 SelectedBuild=0
 VisibleModules=

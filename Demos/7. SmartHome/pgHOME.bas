@@ -34,7 +34,8 @@ Sub Initialize
 	zview.AddToPlaceholder
 '	'build component from placeholder and
 '	'add spot to open the status slide
-'
+	
+
 	Dim status As ZUIZspot
 	status.Initialize(Me, "hstatus", "hstatus")
 	status.BackgroundColor = sh.COLOR_ORANGE

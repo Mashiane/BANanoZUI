@@ -20,14 +20,17 @@ Sub Initialize
 	Dim comp As VMElement
 	'initialie the component
 	comp.Initialize(Me, "tv", "tv")
+	comp.SetData("vol", 5)
+	comp.setdata("ch", 9)
 	
 	'create the view
 	Dim zview As ZUIZview
 	zview.Initialize(Me, "tvview", "tvsview")
 	zview.AddDivSlotExtension
+	zview.Text = "Channel 9"
 	zview.AddToPlaceholder
 	'
-	Dim ziframe As ZUIZiframe
+	Dim ziframe As ZUIIframe
 	ziframe.Initialize(Me, "ziframe", "ziframe")
 	ziframe.SlotMedia
 	ziframe.Width = "100%"
@@ -35,7 +38,6 @@ Sub Initialize
 	ziframe.Src = "https://www.youtube.com/embed/aJOTlE1K90k"
 	ziframe.AddAttr("frameborder", "0")
 	ziframe.Allowfullscreen = True
-	ziframe.Text = "Channel 9"
 	ziframe.AddToView(zview)
 	'
 	Dim plus As ZUIZspot = zui.CreateSpot(Me, "plus", "", "", "s", "130", "-15", "", "+")
@@ -50,19 +52,22 @@ Sub Initialize
 	poweroff.AddClass("success")
 	poweroff.Button = True
 	poweroff.AddIcon("", "fa fa-power-off")
+	poweroff.toview = "living"
 	poweroff.AddToViewSlot(zview)
 	'
 	Dim volume As ZUIZspot = zui.CreateSpot(Me, "volume", "vol","","m","100","135","","")
-	volume.progress = 14
+	volume.QtySync = "vol"
 	volume.slider = True
-	volume.button = True
+	volume.Knob = True
 	volume.AddToViewSlot(zview)
 	'
 	Dim ch As ZUIZspot = zui.CreateSpot(Me, "ch", "ch.","","m","100","45","","")
-	ch.AddClass("accent")
-	ch.Button = True
+	ch.QtySync = "ch"
+	ch.Knob = True
+	ch.slider = True
 	ch.AddToViewSlot(zview)
 
+	
 	'build component from placeholder and
 	'add the component to the app
 	sh.AddComponentZUI(comp)

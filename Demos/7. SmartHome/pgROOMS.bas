@@ -5,6 +5,7 @@ Type=StaticCode
 Version=8.5
 @EndOfDesignText@
 'Static code module
+'#IgnoreWarnings:12
 Sub Process_Globals
 	Private BANano As BANano   'ignore
 	Private sh As VueApp
@@ -94,7 +95,9 @@ Sub Initialize
 	zdialog.VOnDone = "cbclosedialog"
 	'text to appear inside the dialog
 	zdialog.Text = "Add a new room?"
-'	'
+	zdialog.AddDivSlotExtension
+	zdialog.AddToViewSlot(zview)
+	
 	'add a spot (success)
 	Dim zsuccess As ZUIZspot
 	zsuccess.Initialize(Me, "success", "success")
@@ -102,11 +105,11 @@ Sub Initialize
 	zsuccess.Button = True
 	zsuccess.angle = 45
 	zsuccess.size = "s"
-	zsuccess.distance = 80
+	zsuccess.distance = 120
 	zsuccess.VOnClickNative = "cbclosedialog"
 	zsuccess.AddIcon("", "fas fa-check")
-	zdialog.AddSpot(zsuccess.tostring)
-'	'
+	zsuccess.AddToDialogSlot(zdialog)
+	'
 	'add a spot (danger)
 	Dim zdanger As ZUIZspot
 	zdanger.Initialize(Me, "danger", "danger")
@@ -114,12 +117,11 @@ Sub Initialize
 	zdanger.Button = True
 	zdanger.angle = 135
 	zdanger.size = "s"
-	zdanger.distance = 80
+	zdanger.distance = 120
 	zdanger.VOnClickNative = "cbclosedialog"
 	zdanger.AddIcon("", "fas fa-times")
-	zdialog.AddSpot(zdanger.tostring)
-'	'
-	zdialog.AddToViewSlot(zview)
+	zdanger.AddToDialogSlot(zdialog)
+'
 	' bind the callbacks
 	comp.SetMethod(Me, "cbopendialog")
 	comp.SetMethod(Me, "cbclosedialog")
@@ -131,10 +133,10 @@ Sub Initialize
 End Sub
 
 'define the callbacks
-Sub cbopendialog
+Sub cbopendialog   'IgnoreDeadCode
 	sh.SetData("opendialog", True)
 End Sub
 
-Sub cbclosedialog
+Sub cbclosedialog   'IgnoreDeadCode
 	sh.SetData("opendialog", False)
 End Sub

@@ -5,7 +5,7 @@ Type=StaticCode
 Version=8.31
 @EndOfDesignText@
 'Static code module
-#IgnoreWarnings:12
+'#IgnoreWarnings:12
 Sub Process_Globals
 	Private BANano As BANano 'ignore
 	Public MyApp As VueApp
@@ -21,14 +21,14 @@ Sub Init
 	MyApp.SetData("mode", "dark")
 	'
 	pgHOME.Initialize  'done
-	'pgDEVICE.Initialize  
+	pgDEVICE.Initialize  
 	pgDEVICES.Initialize 
 	pgFAMILY.Initialize 
 	pgLIVING.Initialize 
 	pgLOGS.Initialize
 	pgROOMS.Initialize  'done
 	pgSCENES.Initialize 
-	'pgSEARCH.Initialize  'done
+	pgSEARCH.Initialize  'done
 	pgSETTINGS.Initialize  'done
 	pgSTATUS.Initialize
 	pgTV.Initialize   'done
@@ -40,7 +40,6 @@ Sub Init
 	'
 	MyApp.SetWatch(Me, "theme", True, True, "themechanged")
 	MyApp.SetWatch(Me, "mode", True, True, "modechanged")
-	
 	'serve the webapp
 	MyApp.Serve
 	'get the zui instance
@@ -59,8 +58,9 @@ Sub Init
 	zui.SetView("home")
 End Sub
 
+
 'fires each time a theme is changed
-Sub themechanged
+Sub themechanged  'IgnoreDeadCode
 	Try
 		'read saved theme
 		Dim stheme As String = MyApp.GetData("theme")
@@ -72,7 +72,7 @@ Sub themechanged
 End Sub
 
 'fires each time a mode is changed
-Sub modechanged
+Sub modechanged  'IgnoreDeadCode
 	Try
 		'read the saved mode
 		Dim smode As String = MyApp.GetData("mode")

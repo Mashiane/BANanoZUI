@@ -24,9 +24,19 @@ Sub Initialize
 	'create the view
 	Dim zview As ZUIZview
 	zview.Initialize(Me, "deviceview", "deviceview")
-	zview.Text = "Device"
+	zview.Text = "{{ $store.category }}"
 	zview.AddToPlaceholder
 
+	Dim zspot As ZUIZspot
+	zspot.Initialize(Me, "zspot", "zspot")
+	zspot.SlotExtension
+	zspot.ToView = "home"
+	zspot.Distance = 130
+	zspot.angle = 30
+	zspot.size = "small"
+    zspot.Text = "{{ $store.qty }}"
+    zspot.AddToView(zview)
+	
 	'build component from placeholder and
 	'add the component to the app
 	sh.AddComponentZUI(comp)

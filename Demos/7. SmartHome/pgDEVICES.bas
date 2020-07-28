@@ -5,6 +5,7 @@ Type=StaticCode
 Version=8.5
 @EndOfDesignText@
 'Static code module
+'#ignorewarnings:12
 Sub Process_Globals
 	Private BANano As BANano  'ignore
 	Private sh As VueApp
@@ -56,14 +57,18 @@ Sub Initialize
 	dspot.Index = ":props.index"
 	dspot.Distance = 60
 	dspot.Label = ":props.category"
+	dspot.Size = zui.SIZE_S
 	dspot.LabelPos = zui.POS_TOP
+	dspot.Button = True
+	dspot.VOnClickNative = "opendevice(props)"
 	dspot.AddSpan("white", "{{props.qty}}")        
+	
 	'add a child z spot
 	Dim childspot As ZUIZspot
 	childspot.Initialize(Me, "devicespotchild", "devicespotchild")
 	childspot.SlotExtension
 	childspot.Angle = -45
-	childspot.AddAttr(":style", "getchildstyle(props.category)")
+	childspot.Bind("style", "getchildstyle(props.category)")
 	childspot.Size = zui.SIZE_XXS
 	'add a child spot
 	dspot.AddChildSpot(childspot.ToString)
@@ -71,16 +76,26 @@ Sub Initialize
 	dspot.AddToList(zlist)
 
 	comp.SetMethod(Me, "getchildstyle")
+	comp.setmethod(Me, "opendevice")
 	'build component from placeholder and
 	'add the component to the app
 	sh.AddComponentZUI(comp)
 
 End Sub
 
+'we are navigating via code
+'we save the items we want to access in global state
+Sub opendevice(props As Map)    'IgnoreDeadCode
+	'ensure we have a live reference
+	zui = pgIndex.zui
+	Dim scat As String = props.get("category")
+	Dim qty As String = props.Get("qty")
+	sh.SetData("category", scat)
+	sh.SetData("qty", qty)
+	zui.ToView("device")
+End Sub
 
-':To-view="{ name: 'device', params: {category: props.category, qty: props.qty}}"
-
-Sub getchildstyle(cat As String) As String
+Sub getchildstyle(cat As String) As String   'IgnoreDeadCode
 	Select Case cat
 	Case "care"
 		Return "background-color: red; border: none;"
